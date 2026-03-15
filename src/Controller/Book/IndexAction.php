@@ -36,7 +36,7 @@ class IndexAction extends AbstractController {
         $reports = [ ];
 
         foreach($result->result as $book) {
-            $reports[$book->getId()] = $this->availabilityReportHelper->genereateReportForBook($book);
+            $reports[$book->getId()] = $this->availabilityReportHelper->generateReportForBook($book);
         }
 
         return $this->render('books/index.html.twig', [

@@ -5,6 +5,7 @@ namespace App\Book;
 use App\Checkout\CheckoutManager;
 use App\Checkout\CheckoutStatus;
 use App\Entity\Book;
+use DateTime;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
@@ -28,13 +29,13 @@ class AvailabilityReportGenerator {
      */
     public function regenerateReportForBook(Book $book): AvailabilityReport {
         $this->cache->delete(sprintf(self::KEY_PATTERN, $book->getId()));
-        return $this->genereateReportForBook($book);
+        return $this->generateReportForBook($book);
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    public function genereateReportForBook(Book $book): AvailabilityReport {
+    public function generateReportForBook(Book $book): AvailabilityReport {
         return $this->cache->get(sprintf(self::KEY_PATTERN, $book->getId()), function (ItemInterface $item) use($book): AvailabilityReport {
             $item->expiresAfter(self::LIFETIME_IN_SECONDS);
 
@@ -58,7 +59,7 @@ class AvailabilityReportGenerator {
                 }
             }
 
-            return new AvailabilityReport($notAvailable, $checkedOut, $availableAndNotCheckedOut);
+            return new AvailabilityReport($notAvailable, $checkedOut, $availableAndNotCheckedOut, new DateTime());
         });
     }
 }
