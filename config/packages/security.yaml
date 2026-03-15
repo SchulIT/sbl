@@ -41,7 +41,7 @@ security:
     access_control:
         - { path: ^/logout/success, roles: PUBLIC_ACCESS }
         - { path: ^/saml/(login|discovery|metadata.xml)$, roles: PUBLIC_ACCESS }
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/(admin|settings), roles: ROLE_ADMIN }
         - { path: ^/books, roles: ROLE_BOOKS_ADMIN }
         - { path: ^/borrower, roles: [ ROLE_BORROWERS_ADMIN, ROLE_LENDER ] }
         - { path: ^/checkout, roles: ROLE_LENDER }
