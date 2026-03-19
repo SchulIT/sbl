@@ -39,20 +39,15 @@ class AdminMenuBuilder extends AbstractMenuBuilder {
             ])
                 ->setExtra('icon', 'fa fa-cog');
 
-            $menu->addChild('cron.label', [
-                'route' => 'admin_cronjobs'
-            ])
-                ->setExtra('icon', 'fas fa-history');
-
-            $menu->addChild('messenger.label', [
-                'route' => 'admin_messenger'
-            ])
-                ->setExtra('icon', 'fas fa-envelope-open-text');
-
             $menu->addChild('logs.label', [
                 'route' => 'admin_logs'
             ])
                 ->setExtra('icon', 'fas fa-clipboard-list');
+
+            $menu->addChild('messenger.label', [
+                'route' => 'zenstruck_messenger_monitor_dashboard'
+            ])
+                ->setExtra('icon', 'fas fa-envelope-open-text');
         }
 
         return $root;
