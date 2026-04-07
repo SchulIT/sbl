@@ -42,6 +42,6 @@ RestartSec=0
 WantedBy=default.target
 ```
 
-:::tip Tipp
+:::tip[Tipp]
 Es wird empfohlen, den Dienst als sogenannten *user service* laufen zu lassen.
 :::

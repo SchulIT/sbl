@@ -9,8 +9,9 @@ Nun die folgenden Kommandos ausführen, um die Installation abzuschließen:
 ## CSS- und JavaScript-Dateien erzeugen
 
 ```bash
-$ npm run build
 $ php bin/console assets:install
+$ php bin/console importmap:install
+$ php bin/console asset-map:compile
 ```
 
 ## Abschließende Kommandos
@@ -29,7 +30,7 @@ $ php bin/console app:setup
 Die Konfiguration des Webservers kann in der [Symfony Dokumentation](https://symfony.com/doc/current/setup/web_server_configuration.html)
 nachgelesen werden.
 
-:::danger Wichtig
+:::danger[Wichtig]
 Es ist wichtig, dass das `public/`-Verzeichnis als Wurzelverzeichnis im Webserver hinterlegt ist. Anderenfalls können
 Konfigurationsdateien abgefangen werden.
 :::

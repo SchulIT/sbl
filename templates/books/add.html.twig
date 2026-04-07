@@ -10,9 +10,8 @@
     </ol>
 {% endblock %}
 
-{% block javascript %}
-    {{ parent() }}
-    <script src="{{ asset('build/import.js') }}"></script>
+{% block importmap %}
+    {{ importmap(['app', 'import']) }}
 {% endblock %}
 
 {% block content %}

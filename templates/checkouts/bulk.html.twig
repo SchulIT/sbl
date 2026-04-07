@@ -9,10 +9,12 @@
     </ol>
 {% endblock %}
 
-{% block javascript %}
-    {{ parent() }}
-    <script src="{{ asset('build/checkout.js') }}"></script>
-    <script src="{{ asset('build/studentselection.js') }}"></script>
+{% block importmap %}
+    {{ importmap(['app', 'checkout']) }}
+{% endblock %}
+
+{% block post_javascript %}
+    <script src="{{ preload(asset('js/studentselection.js')) }}"></script>
 {% endblock %}
 
 {% block content %}

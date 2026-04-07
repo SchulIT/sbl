@@ -10,9 +10,8 @@
     </ol>
 {% endblock %}
 
-{% block javascript %}
-{{ parent() }}
-<script src="{{ asset('build/bulkaction.js') }}"></script>
+{% block post_javascript %}
+    <script src="{{ preload(asset('js/bulkaction.js')) }}"></script>
 {% endblock %}
 
 {% block content %}

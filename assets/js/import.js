@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 function updatePreview() {
     let $input = document.getElementById('book_cover_file');

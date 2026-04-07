@@ -12,7 +12,7 @@ muss der Server die Ausführung von Hintergrundprozessen (bspw. mittels `systemd
 * Webserver
   * Apache 2.4+ oder
   * nginx
-* PHP 8.3+ mit folgenden Erweiterungen
+* PHP 8.4+ mit folgenden Erweiterungen
   * bcmath
   * ctype
   * curl
@@ -26,18 +26,19 @@ muss der Server die Ausführung von Hintergrundprozessen (bspw. mittels `systemd
   * libxml
   * mbstring
   * openssl
+  * pcre
+  * pdo_mysql
+  * simplexml
+  * tokenizer
+  * xml
+  * xmlwriter
+  * zlib
+  * zstd
 * MariaDB 10.4+ (ein kompatibles MySQL kann funktionieren, ist jedoch nicht getestet)
 * Composer 2+
 * Git (zum Einspielen des Quelltextes)
-* NodeJS >= 18 inkl. NPM (zum Erstellen der JavaScript- und CSS-Dateien)
 
 Die Software muss auf einer Subdomain betrieben werden. Das Betreiben in einem Unterverzeichnis wird nicht unterstützt.
-
-:::tip Hinweis
-Theoretisch ist es auch ohne Git und NodeJS möglich, die Software zu installieren. Dazu kann der Quelltext mittels GitHub
-heruntergeladen werden. Die Assets müssen dann jedoch auf einer Maschine erzeugt werden, wo Node und NPM verfügbar sind.
-Dann muss das gesamte `/public/build`-Verzeichnis nach dem Erstellen der Assets auf den Webspace kopiert werden.
-:::
 
 ## Installation auf Webspaces
 

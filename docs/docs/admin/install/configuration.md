@@ -20,7 +20,7 @@ Die folgenden zwei Einstellungen werden für die Konfiguration des Symfony Frame
 
 Dieser Wert muss immer `prod` enthalten, sodass das System in der Produktionsumgebung ist.
 
-:::caution Achtung
+:::caution[Achtung]
 In einer Produktionsumgebung niemals `dev` verwenden.
 :::
 

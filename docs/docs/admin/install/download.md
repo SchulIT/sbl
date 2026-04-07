@@ -18,5 +18,4 @@ Dabei `<LATEST_VERSION>` durch die gewünschte Version ersetzen.
 
 ```bash
 $ composer install --no-dev --classmap-authoritative --no-scripts
-$ npm install
 ```

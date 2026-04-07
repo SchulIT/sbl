@@ -1,0 +1,12 @@
+roles:
+  ROLE_USER: Benutzer (nur lesend)
+  ROLE_LENDER: Benutzer darf Ausleihen und Rückgaben durchführen
+  ROLE_BOOKS_ADMIN: Benutzer darf Bücher verwalten (aber ohne ROLE_LENDER nicht ausleihen)
+  ROLE_BORROWERS_ADMIN: Benutzer darf Entleiher verwalten
+  ROLE_ADMIN: Administrator
+
+role_attribute:
+  display_name: Schulbücher Rollen
+  description: Rollen im Schülbücher-Tool
+
+description: Über dieses Tool wird die Ausleihe der Schulbücher organisiert.
