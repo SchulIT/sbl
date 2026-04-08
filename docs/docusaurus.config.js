@@ -10,7 +10,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'SchulIT Library',
+  title: 'SchulIT Schulbuchausleihe',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
 
@@ -23,12 +23,12 @@ const config = {
   url: 'https://docs.schulit.de/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/library',
+  baseUrl: '/sbl',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'schulit', // Usually your GitHub org/user name.
-  projectName: 'library', // Usually your repo name.
+  projectName: 'sbl', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -51,7 +51,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/SchulIT/library/tree/master/docs',
+            'https://github.com/SchulIT/sbl/tree/master/docs',
         },
         blog: false,
         theme: {
@@ -67,7 +67,7 @@ const config = {
       // Replace with your project's social card
       image: '/img.jpg',
       navbar: {
-        title: 'SchulIT Library',
+        title: 'SchulIT Schulbuchausleihe',
         logo: {
           alt: 'Logo',
           src: 'img/logo.svg',
@@ -80,7 +80,7 @@ const config = {
             label: 'Dokumentation',
           },
           {
-            href: 'https://github.com/schulit/library',
+            href: 'https://github.com/schulit/sbl',
             label: 'GitHub',
             position: 'right',
           },
