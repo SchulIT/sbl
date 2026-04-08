@@ -8,7 +8,7 @@
         {% endif %}
 
         <div class="align-self-start flex-fill">
-            {{ book.title }} <span class="badge text-bg-primary">{{ copy.barcodeId }}</span>
+            {{ book.title }} <span class="badge text-bg-primary"><i class="fas fa-barcode"></i> {{ copy.barcodeId }}</span>
 
             {% if book.subtitle is not empty %}
                 <span class="text-muted d-block">{{ book.subtitle }}</span>
@@ -20,7 +20,7 @@
 
             {% if manager.checkedOut(copy) %}
                 {% set lastCheckout = copy.checkouts.first %}
-                {% if lastCheckout is not empty and lastCheckout.end is null %}
+                {% if lastCheckout is not empty and lastCheckout.borrower is not null and lastCheckout.end is null %}
                     <div class="alert alert-danger">
                         {{ 'checkout.errors.checked_out'|trans({'%lastname%': lastCheckout.borrower.lastname, '%firstname%': lastCheckout.borrower.firstname }) }}
                     </div>
