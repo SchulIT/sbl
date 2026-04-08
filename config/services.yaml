@@ -79,3 +79,17 @@ services:
         tags:
             - { name: knp_menu.voter }
 
+    # MONOLOG
+    SchulIT\CommonBundle\Monolog\DatabaseHandler:
+        arguments:
+            $connection: '@doctrine.dbal.logger_connection'
+        calls:
+            - setFormatter: [ '@SchulIT\CommonBundle\Monolog\LineFormatter' ]
+
+    SchulIT\CommonBundle\Monolog\UsernameProcessor:
+        tags:
+            - { name: monolog.processor }
+    SchulIT\CommonBundle\Monolog\LineFormatter: ~
+    SchulIT\CommonBundle\Monolog\RequestProcessor:
+        tags:
+            - { name: monolog.processor }
