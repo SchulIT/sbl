@@ -1,5 +1,5 @@
 parameters:
-  project_url: https://github.com/schulit/library
+  project_url: https://github.com/schulit/sbl
 
 common:
   app:

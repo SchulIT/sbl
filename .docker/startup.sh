@@ -3,6 +3,9 @@
 # Clear cache
 /usr/local/bin/frankenphp php-cli bin/console cache:clear
 
+# Setup app
+/usr/local/bin/frankenphp php-cli bin/console app:setup
+
 # Migrate database
 /usr/local/bin/frankenphp php-cli bin/console doctrine:migrations:migrate --no-interaction -v
 

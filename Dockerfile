@@ -30,7 +30,10 @@ RUN install-php-extensions \
     sysvsem \
     brotli \
     zstd \
-    zlib
+    zlib \
+    imagick \
+    gd \
+    bcmath
 
 # Copy shared libs of frankenphp and all installed extensions to temporary location
 # You can also do this step manually by analyzing ldd output of frankenphp binary and each extension .so file
@@ -89,7 +92,7 @@ COPY .docker/startup.sh startup.sh
 RUN chmod +x startup.sh
 
 # Copy Caddyfile
-COPY ./docker/Caddyfile /etc/caddy/Caddyfile
+COPY .docker/Caddyfile /etc/caddy/Caddyfile
 
 # Export HTTP port
 EXPOSE 80

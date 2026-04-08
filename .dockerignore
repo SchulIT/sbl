@@ -21,4 +21,5 @@ certs/*.key
 
 public/build
 public/assets
+public/covers
 var/*
