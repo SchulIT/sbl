@@ -8,7 +8,6 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-imagick": "*",
-        "ext-zstd": "*",
         "ext-zlib": "*",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.12",
