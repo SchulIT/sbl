@@ -93,3 +93,12 @@ services:
     SchulIT\CommonBundle\Monolog\RequestProcessor:
         tags:
             - { name: monolog.processor }
+
+
+    Zenstruck\Messenger\Monitor\Command\PurgeCommand:
+        tags:
+            - { name: scheduler.task, arguments: '', trigger: 'cron', expression: '@daily' }
+
+    SchulIT\CommonBundle\Command\ClearLogsCommand:
+        tags:
+            - { name: scheduler.task, arguments: '', trigger: 'cron', expression: '@daily' }
