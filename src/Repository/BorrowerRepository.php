@@ -22,24 +22,14 @@ class BorrowerRepository extends AbstractTransactionalRepository implements Borr
             ]);
     }
 
-    public function find(array $types, ?string $grade, int &$page, int &$limit, ?string $searchQuery = null, bool $onlyWithActiveCheckouts = false): PaginatedResult {
-        if($page < 1) {
-            $page = 1;
-        }
-
-        if($limit < 1) {
-            $limit = 25;
-        }
-
+    public function find(array $types, PaginationQuery $paginationQuery, ?string $grade, ?string $searchQuery = null, bool $onlyWithActiveCheckouts = false): PaginatedResult {
         $qb = $this->em->createQueryBuilder()
             ->select(['p'])
             ->from(Borrower::class, 'p')
             ->where('p.type IN (:types)')
             ->setParameter('types', $types)
             ->orderBy('p.lastname', 'asc')
-            ->addOrderBy('p.firstname', 'asc')
-            ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit);
+            ->addOrderBy('p.firstname', 'asc');
 
         if($grade !== null) {
             $qb->andWhere('p.grade = :grade')->setParameter('grade', $grade);
@@ -60,23 +50,17 @@ class BorrowerRepository extends AbstractTransactionalRepository implements Borr
         if(!empty($searchQuery)) {
             $qb->andWhere(
                 $qb->expr()->orX(
-                    'p.barcodeId = :searchQuery',
+                    'p.barcodeId = :barcodeId',
                     'p.firstname LIKE :searchQuery',
                     'p.lastname LIKE :searchQuery',
                     'p.email LIKE :searchQuery'
                 )
             )
+                ->setParameter('barcodeId', $searchQuery)
                 ->setParameter('searchQuery', '%'.$searchQuery.'%');
         }
 
-        $query = $qb->getQuery();
-
-        $paginator = new Paginator($query, fetchJoinCollection: true);
-
-        return new PaginatedResult(
-            iterator_to_array($paginator->getIterator()),
-            $paginator->count()
-        );
+        return PaginatedResult::fromQueryBuilder($qb, $paginationQuery);
     }
 
     public function findAll(): array {

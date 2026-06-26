@@ -12,8 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class ImportAction extends AbstractController {
-    public function __construct(private readonly AddAction $addAction) {
-    }
+
 
     #[Route('/borrower/import', name: 'import_borrowers')]
     public function __invoke(Request $request, CsvImporter $csvImporter): Response {

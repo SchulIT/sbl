@@ -28,11 +28,10 @@ interface BookCopyRepositoryInterface extends TransactionalRepositoryInterface {
 
     /**
      * @param Book $book
-     * @param int $page
-     * @param int $limit
+     * @param PaginationQuery $paginationQuery
      * @return PaginatedResult<BookCopy>
      */
-    public function findByBookPaginated(Book $book, int &$page, int &$limit): PaginatedResult;
+    public function findByBookPaginated(Book $book, PaginationQuery $paginationQuery): PaginatedResult;
 
     public function countNotAvailableByBook(Book $book): int;
 

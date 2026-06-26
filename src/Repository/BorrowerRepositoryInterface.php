@@ -13,14 +13,13 @@ interface BorrowerRepositoryInterface extends TransactionalRepositoryInterface {
 
     /**
      * @param Borrower[] $types
+     * @param PaginationQuery $paginationQuery
      * @param string|null $grade
-     * @param int $page
-     * @param int $limit
      * @param string|null $searchQuery
      * @param bool $onlyWithActiveCheckouts
      * @return PaginatedResult<Borrower>
      */
-    public function find(array $types, ?string $grade, int &$page, int &$limit, ?string $searchQuery = null, bool $onlyWithActiveCheckouts = false): PaginatedResult;
+    public function find(array $types, PaginationQuery $paginationQuery, ?string $grade, ?string $searchQuery = null, bool $onlyWithActiveCheckouts = false): PaginatedResult;
 
     /**
      * @param BorrowerType $type

@@ -5,10 +5,12 @@ namespace App\Controller\Borrower;
 use App\Borrower\BorrowerReportGenerator;
 use App\Entity\BorrowerType;
 use App\Repository\BorrowerRepositoryInterface;
+use App\Repository\PaginationQuery;
 use App\Security\Voter\BorrowerVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Throwable;
 
@@ -21,53 +23,45 @@ class IndexAction extends AbstractController {
     }
 
     #[Route('/borrower', name: 'borrowers')]
-    public function __invoke(Request $request): Response {
+    public function __invoke(
+        #[MapQueryParameter] int $page = 1,
+        #[MapQueryParameter(name: 'type', filter: FILTER_DEFAULT, flags: FILTER_FLAG_EMPTY_STRING_NULL | FILTER_NULL_ON_FAILURE)] BorrowerType|null $type = null,
+        #[MapQueryParameter(name: 'grade', filter: FILTER_DEFAULT, flags: FILTER_FLAG_EMPTY_STRING_NULL | FILTER_NULL_ON_FAILURE)] string|null $grade = null,
+        #[MapQueryParameter(name: 'q', filter: FILTER_DEFAULT, flags: FILTER_FLAG_EMPTY_STRING_NULL | FILTER_NULL_ON_FAILURE)] string|null $searchQuery = null,
+        #[MapQueryParameter(name: 'active_checkouts')] bool $onlyWithActiveCheckouts = false
+    ): Response {
         $this->denyAccessUnlessGranted(BorrowerVoter::SHOW_ANY);
 
-        $page = $request->query->getInt('page', 1);
-        $limit = $request->query->getInt('limit', 50);
-        $grade = $request->query->get('grade', null);
-        $searchQuery = $request->query->get('q', null);
-        $onlyWithActiveCheckouts = $request->query->get('active_checkouts') === self::CHECK_VALUE;
+        $selectedTypes = BorrowerType::cases();
 
-        try {
-            $selectedType = [ BorrowerType::from($request->query->get('type', null)) ];
-        } catch(Throwable) {
-            $selectedType = BorrowerType::cases();
+        if($type !== null) {
+            $selectedTypes = [ $type ];
         }
 
-        if(empty($grade)) {
-            $grade = null;
-        }
+        $borrowers = $this->repository->find($selectedTypes, new PaginationQuery(page: $page), $grade, $searchQuery, $onlyWithActiveCheckouts);
 
-        if(empty($searchQuery)) {
-            $searchQuery = null;
-        }
+        if(!empty($searchQuery) && count($borrowers) === 1) {
+            $borrower = array_first($borrowers->getIterator()->getArrayCopy());
 
-        $result = $this->repository->find($selectedType, $grade, $page, $limit, $searchQuery, $onlyWithActiveCheckouts);
-
-        if(!empty($searchQuery) && $result->totalCount === 1) {
             return $this->redirectToRoute('show_borrower', [
-                'uuid' => $result->result[0]->getUuid()
+                'uuid' => $borrower->getUuid()
             ]);
         }
 
         $grades = $this->repository->findGrades();
         $reports = [ ];
 
-        foreach($result->result as $borrower) {
+        foreach($borrowers as $borrower) {
             $reports[$borrower->getId()] = $this->borrowerReportGenerator->generateReportForBorrower($borrower);
         }
 
         return $this->render('borrowers/index.html.twig', [
-            'borrowers' => $result->result,
-            'page' => $page,
-            'pages' => ceil((double)$result->totalCount / $limit),
+            'borrowers' => $borrowers,
             'grade' => $grade,
             'grades' => $grades,
             'query' => $searchQuery,
             'types' => BorrowerType::cases(),
-            'selectedType' => count($selectedType) > 1 ? null : $selectedType[0],
+            'selectedType' => count($selectedTypes) > 1 ? null : $selectedTypes[0],
             'reports' => $reports,
             'active_checkouts' => $onlyWithActiveCheckouts
         ]);

@@ -96,6 +96,10 @@
                                     {% if book.barcodeTitle is not empty %}
                                         <span class="badge text-bg-secondary"><i class="fas fa-barcode"></i> {{ book.barcodeTitle }}</span>
                                     {% endif %}
+
+                                    {% if book.isbn is not empty %}
+                                        <span class="badge text-bg-secondary">{{ book.isbn }}</span>
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle">
                                     {{ book.publisher }}
@@ -135,16 +139,8 @@
                     </table>
                 </div>
             {% endif %}
-        </div>
 
-        {% include '@Common/includes/pagination.html.twig' with {
-            currentFilters: {
-                q: query
-            },
-            currentPage: page,
-            paginationPath: 'books',
-            lastPage: pages,
-            showAlwaysFirstAndLast: true
-        } only %}
+
+        </div>
     </div>
 {% endblock %}

@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class BookRepository extends AbstractRepository implements BookRepositoryInterface{
 
@@ -17,21 +16,11 @@ class BookRepository extends AbstractRepository implements BookRepositoryInterfa
             ->findOneBy(['id' => $id]);
     }
 
-    public function find(int &$page, int &$limit, ?string $searchQuery = null): PaginatedResult {
-        if($page < 1) {
-            $page = 1;
-        }
-
-        if($limit < 1) {
-            $limit = 25;
-        }
-
+    public function find(PaginationQuery $paginationQuery, ?string $searchQuery = null): PaginatedResult {
         $qb = $this->em->createQueryBuilder()
             ->select(['b'])
             ->from(Book::class, 'b')
-            ->orderBy('b.title', 'ASC')
-            ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit);
+            ->orderBy('b.title', 'ASC');
 
         if(!empty($searchQuery)) {
             $qb->where('b.title LIKE :searchQuery')
@@ -40,14 +29,7 @@ class BookRepository extends AbstractRepository implements BookRepositoryInterfa
                 ->setParameter('searchQuery', '%' . $searchQuery . '%');
         }
 
-        $query = $qb->getQuery();
-
-        $paginator = new Paginator($query, fetchJoinCollection: true);
-
-        return new PaginatedResult(
-            iterator_to_array($paginator->getIterator()),
-            $paginator->count()
-        );
+        return PaginatedResult::fromQueryBuilder($qb, $paginationQuery);
     }
 
     public function findAll(): array {

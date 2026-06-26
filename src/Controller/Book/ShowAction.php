@@ -9,17 +9,27 @@ use App\Entity\Book;
 use App\Entity\BookCopy;
 use App\Form\BookCopyCreateRequestType;
 use App\Repository\BookCopyRepositoryInterface;
+use App\Repository\PaginationQuery;
 use App\Security\Voter\BookVoter;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 class ShowAction extends AbstractController {
 
     #[Route('/book/{uuid}', name: 'show_book')]
-    public function show(#[MapEntity(mapping: ['uuid' => 'uuid'])] Book $book, Request $request, BookCopyCreator $creator, BookCopyRepositoryInterface $copyRepository, CheckoutManager $checkoutManager): Response {
+    public function show(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] Book $book,
+        Request $request,
+        BookCopyCreator $creator,
+        BookCopyRepositoryInterface $copyRepository,
+        CheckoutManager $checkoutManager,
+        #[MapQueryParameter] int $page = 1,
+        #[MapQueryParameter] int $limit = 25
+    ): Response {
         $this->denyAccessUnlessGranted(BookVoter::SHOW, $book);
 
         $createRequest = new BookCopyCreateRequest();
@@ -36,17 +46,12 @@ class ShowAction extends AbstractController {
             ]);
         }
 
-        $page = $request->query->getInt('page', 1);
-        $limit = $request->query->getInt('limit', 25);
-        $result = $copyRepository->findByBookPaginated($book, $page, $limit);
+        $copies = $copyRepository->findByBookPaginated($book, new PaginationQuery(page: $page, limit: $limit));
 
         return $this->render('books/show.html.twig', [
             'book' => $book,
-            'copies' => $result->result,
+            'copies' => $copies,
             'form' => $createForm->createView(),
-            'page' => $page,
-            'limit' => $limit,
-            'pages' => ceil((double)$result->totalCount / $limit),
             'manager' => $checkoutManager
         ]);
     }

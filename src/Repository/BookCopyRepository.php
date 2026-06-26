@@ -38,33 +38,17 @@ class BookCopyRepository extends AbstractTransactionalRepository implements Book
             ->getResult();
     }
 
-    public function findByBookPaginated(Book $book, int &$page, int &$limit): PaginatedResult {
-        if($page < 1) {
-            $page = 1;
-        }
-
-        if($limit < 1 || $limit > 500) {
-            $limit = 25;
-        }
-
-        $query = $this->em->createQueryBuilder()
+    public function findByBookPaginated(Book $book, PaginationQuery $paginationQuery): PaginatedResult {
+        $qb = $this->em->createQueryBuilder()
             ->select(['c', 'b'])
             ->from(BookCopy::class, 'c')
             ->leftJoin('c.book', 'b')
             ->orderBy('c.createdAt', 'ASC')
             ->addOrderBy('c.id', 'ASC')
             ->where('c.book = :book')
-            ->setParameter('book', $book)
-            ->setFirstResult(($page - 1) * $limit)
-            ->setMaxResults($limit)
-            ->getQuery();
+            ->setParameter('book', $book);
 
-        $paginator = new Paginator($query, fetchJoinCollection: true);
-
-        return new PaginatedResult(
-            iterator_to_array($paginator),
-            $paginator->count()
-        );
+        return PaginatedResult::fromQueryBuilder($qb, $paginationQuery);
     }
 
     public function persist(BookCopy $copy): void {

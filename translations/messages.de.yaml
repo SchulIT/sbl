@@ -47,6 +47,7 @@ actions:
 borrowers:
   label: Entleiher
   empty: Aktuell ist kein Entleiher im System hinterlegt.
+  count: '%count% Entleiher'
   only_with_active_checkouts: Nur Entleiher mit aktiven Ausleihen
   add:
     label: Neuen Entleiher
@@ -102,12 +103,14 @@ return:
 books:
   label: Bücher
   empty: Aktuell sind keine Bücher im System hinterlegt.
+  count: '%count% Bücher'
 
   copies:
     label: Exemplare
     empty: Aktuell sind keine Exemplare im System hinterlegt.
     cannot_checkout: Exemplar nicht ausleihbar
     limit: '%count% Exemplare anzeigen'
+    count: '%count% Exemplare'
     add:
       label: Exemplare hinzufügen
       success: Exemplare erfolgreich hinzugefügt

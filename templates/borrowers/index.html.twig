@@ -169,18 +169,30 @@
                             </table>
                         </div>
                     {% endif %}
+
+                    <div class="card-footer">
+                        <div class="d-flex">
+                            <div class="flex-fill align-self-center">
+                                {{ 'borrowers.count'|trans({'%count%': borrowers.totalCount }) }}
+                            </div>
+
+                            <div class="ms-auto">
+                                {% include '@Common/includes/pagination.html.twig' with {
+                                    currentFilters: {
+                                        grade: grade,
+                                        q: query
+                                    },
+                                    currentPage: borrowers.page,
+                                    paginationPath: 'borrowers',
+                                    lastPage: borrowers.totalPages,
+                                    showAlwaysFirstAndLast: true
+                                } only %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                {% include '@Common/includes/pagination.html.twig' with {
-                    currentFilters: {
-                        grade: grade,
-                        q: query
-                    },
-                    currentPage: page,
-                    paginationPath: 'borrowers',
-                    lastPage: pages,
-                    showAlwaysFirstAndLast: true
-                } only %}
+
             </div>
         </div>
     </div>
