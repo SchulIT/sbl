@@ -26,7 +26,7 @@ class BookType extends AbstractType {
             ])
             ->add('publisher', TextType::class, [
                 'label' => 'label.publisher',
-                'required' => false
+                'required' => true
             ])
             ->add('isbn', TextType::class, [
                 'label' => 'label.isbn'
