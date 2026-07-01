@@ -57,8 +57,8 @@ class KlettCrawler implements CrawlerInterface {
 
             $metadata = new BookMetadata();
             $metadata->isbn = $isbn;
-            $metadata->name = $dom->filter('.col-md-9 h2')->first()->text();
-            $metadata->nameZusatz = $dom->filter('.col-md-9 h3')->first()->text();
+            $metadata->name = $dom->filter('.col-12.col-lg-6 h1')->first()->innerText();
+            $metadata->nameZusatz = $dom->filter('.col-12.col-lg-6 h1 span.h2')->first()->innerText();
             $metadata->publisher = self::PublisherName;
 
             $this->crawlImage($dom, $metadata);
@@ -75,7 +75,7 @@ class KlettCrawler implements CrawlerInterface {
 
     private function crawlImage(Crawler $dom, BookMetadata $metadata): void {
         try {
-            $url = $dom->filter('.col-md-9 picture img')->attr('src');
+            $url = $dom->filter('.col-12.col-lg-6 img')->attr('src');
             $response = $this->client->request('GET', $url);
             $imagick = new Imagick();
             $imagick->readImageFile($response->toStream());
