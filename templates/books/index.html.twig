@@ -140,7 +140,25 @@
                 </div>
             {% endif %}
 
+            <div class="card-footer">
+                <div class="d-flex">
+                    <div class="flex-fill align-self-center">
+                        {{ 'books.count'|trans({'%count%': books.totalCount }) }}
+                    </div>
 
+                    <div class="ms-auto">
+                        {% include '@Common/includes/pagination.html.twig' with {
+                            currentFilters: {
+                                q: query
+                            },
+                            currentPage: books.page,
+                            paginationPath: 'books',
+                            lastPage: books.totalPages,
+                            showAlwaysFirstAndLast: true
+                        } only %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
