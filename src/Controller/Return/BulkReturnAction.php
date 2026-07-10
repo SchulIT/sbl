@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BulkReturnAction extends AbstractController {
 
@@ -19,7 +20,10 @@ class BulkReturnAction extends AbstractController {
 
 
     #[Route('/return', name: 'return')]
-    public function __invoke(Request $request): Response {
+    public function __invoke(
+        Request $request,
+        TranslatorInterface $translator
+    ): Response {
         $this->denyAccessUnlessGranted(CheckoutVoter::RETURN);
 
         $return = new BulkReturnRequest();
@@ -28,6 +32,10 @@ class BulkReturnAction extends AbstractController {
 
         if($form->isSubmitted() && $form->isValid()) {
             $borrower = $this->checkoutManager->bulkReturn($return);
+
+            $this->addFlash('success', $translator->trans('return.success', [
+                '%count%' => count($return->copies)
+            ]));
 
             if($borrower === null) {
                 return $this->redirectToRoute('return');

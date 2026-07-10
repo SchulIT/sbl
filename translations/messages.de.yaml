@@ -102,7 +102,7 @@ checkout:
 
 return:
   label: Rücknahme
-  success: Rückname erfolgreich abgeschlossen
+  success: "Rücknahme von %count% Büchern erfolgreich abgeschlossen"
   confirm: "Soll das Buch %title% von %lastname%, %firstname% (%type%) wirklich zurückgenommen werden?"
   preview:
     label: Vorschau
