@@ -16,8 +16,6 @@ use Throwable;
 
 class IndexAction extends AbstractController {
 
-    public const string CHECK_VALUE = '✓';
-
     public function __construct(private readonly BorrowerRepositoryInterface $repository, private readonly BorrowerReportGenerator $borrowerReportGenerator) {
 
     }
