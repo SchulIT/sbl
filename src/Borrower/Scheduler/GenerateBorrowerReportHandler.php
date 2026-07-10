@@ -24,6 +24,6 @@ readonly class GenerateBorrowerReportHandler {
             return;
         }
 
-        $this->reportGenerator->generateReportForBorrower($borrower);
+        $this->reportGenerator->regenerateReportForBorrower($borrower);
     }
 }

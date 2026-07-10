@@ -49,6 +49,10 @@ borrowers:
   empty: Aktuell ist kein Entleiher im System hinterlegt.
   count: '%count% Entleiher'
   only_with_active_checkouts: Nur Entleiher mit aktiven Ausleihen
+  regenerate_borrower_report:
+    info: Die Anzahl der Ausleihen wird nicht in Echtzeit berechnet. Die Berechnung findet stündlich automatisch statt und kann händisch angestoßen werden.
+    label: Ausleihbericht neu generieren
+    success: Der Ausleihbericht wird nun neu generiert. Diese Aktion kann einige Minuten in Anspruch nehmen.
   add:
     label: Neuen Entleiher
     success: Entleiher erfolgreich angelegt

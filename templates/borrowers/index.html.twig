@@ -75,6 +75,21 @@
                         </div>
                     </div>
 
+                    <div class="card-header">
+                        <div class="d-flex">
+                            <div class="flex-fill text-muted align-self-baseline">
+                                <i class="fas fa-info-circle"></i> {{ 'borrowers.regenerate_borrower_report.info'|trans }}
+                            </div>
+
+                            <form action="{{ path('regenerate_borrower_report') }}" method="post" class="ms-auto align-self-baseline">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('borrower_report') }}">
+                                <button type="submit" class="btn btn-outline-primary btn-sm">
+                                    {{ 'borrowers.regenerate_borrower_report.label'|trans }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
                     {% if borrowers|length == 0 %}
                         <div class="card-body">
                             <div class="bs-callout bs-callout-info mt-0 mb-0">
