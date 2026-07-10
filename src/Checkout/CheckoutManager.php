@@ -68,6 +68,10 @@ readonly class CheckoutManager {
             $borrowersCount[$borrower->getId()]++;
         }
 
+        if(count($borrowersCount) !== 1) {
+            return null;
+        }
+
         arsort($borrowersCount);
         $firstKey = array_key_first($borrowersCount);
 
