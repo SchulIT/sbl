@@ -77,11 +77,11 @@
 
                     <div class="card-header">
                         <div class="d-flex">
-                            <div class="flex-fill text-muted align-self-baseline">
+                            <div class="flex-fill text-muted align-self-center">
                                 <i class="fas fa-info-circle"></i> {{ 'borrowers.regenerate_borrower_report.info'|trans }}
                             </div>
 
-                            <form action="{{ path('regenerate_borrower_report') }}" method="post" class="ms-auto align-self-baseline">
+                            <form action="{{ path('regenerate_borrower_report') }}" method="post" class="ms-auto align-self-center">
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('borrower_report') }}">
                                 <button type="submit" class="btn btn-outline-primary btn-sm">
                                     {{ 'borrowers.regenerate_borrower_report.label'|trans }}
