@@ -90,6 +90,11 @@ checkout:
   errors:
     cannot_checkout: Das Exemplar kann nicht ausgeliehen werden
     checked_out: "Das Exemplar ist noch verliehen an %lastname%, %firstname%. Das Exemplar wird automatisch zurückgenommen und der oben ausgewählten Person ausgeliehen. Falls das nicht gewünscht ist, das Exemplar aus der Auswahlliste löschen."
+  bulk:
+    num_copies: 'Es wurden %count% Exemplare ausgewählt'
+    too_many_copies:
+      header: Exemplaranzahl überschritten
+      content: 'Es können maximal %count% Exemplare ausgewählt werden. Bitte ggf. in mehreren Schüben ausleihen bzw. zurücknehmen.'
 
 return:
   label: Rücknahme

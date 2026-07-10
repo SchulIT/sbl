@@ -12,12 +12,15 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 class XhrPreviewAction extends AbstractController {
+
+    public const int MaxNumberOfCopies = 100;
+
     #[Route('/return/xhr', name: 'xhr_return')]
     public function __invoke(Request $request, HttpUtils $httpUtils, BookCopyRepositoryInterface $copyRepository, CheckoutManager $checkoutManager): Response {
         $ids = $httpUtils->parseCharacterSeparatedRequestParamAsIntArray($request, 'ids');
 
-        if(count($ids) > 100) {
-            throw new BadRequestHttpException('Anfrage darf nicht mehr als 500 IDs enthalten.');
+        if(count($ids) > self::MaxNumberOfCopies) {
+            throw new BadRequestHttpException(sprintf('Anfrage darf nicht mehr als %d IDs enthalten.', self::MaxNumberOfCopies));
         }
 
         $copies = $copyRepository->findAllByIds($ids);

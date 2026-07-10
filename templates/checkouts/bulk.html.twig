@@ -54,12 +54,17 @@
             </div>
 
             {{ form_widget(form) }}
+
+            <div class="bs-callout bs-callout-info d-none" id="counter">
+                <template>{{ 'checkout.bulk.num_copies'|trans }}</template>
+                <p></p>
+            </div>
         </div>
     </div>
 
     <div class="card">
         <div class="card-header">{{ 'checkout.preview.label'|trans }}</div>
-        <div class="list-group list-group-flush" id="checkout_preview" data-select="#bulk_checkout_request_copies" data-url="{{ path('xhr_checkout') }}"></div>
+        <div class="list-group list-group-flush" id="checkout_preview" data-select="#bulk_checkout_request_copies" data-url="{{ path('xhr_checkout') }}" data-maximum="{{ maximumNumberOfCopies }}"></div>
     </div>
 
     <div class="buttons">
@@ -73,4 +78,25 @@
     </div>
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+<div class="modal" tabindex="-1" id="modalError">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ 'checkout.bulk.too_many_copies.header'|trans }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ 'checkout.bulk.too_many_copies.content'|trans({'%count%': maximumNumberOfCopies}) }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ 'actions.confirm'|trans }}</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

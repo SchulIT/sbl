@@ -36,7 +36,8 @@ class CheckoutAction extends AbstractController {
 
         return $this->render('checkouts/bulk.html.twig', [
             'form' => $form->createView(),
-            'grades' => $this->studentSelectorJsonGenerator->generateGrades()
+            'grades' => $this->studentSelectorJsonGenerator->generateGrades(),
+            'maximumNumberOfCopies' => XhrPreviewAction::MaxNumberOfCopies
         ]);
     }
 }

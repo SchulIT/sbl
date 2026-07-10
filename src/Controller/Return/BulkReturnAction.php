@@ -39,7 +39,8 @@ class BulkReturnAction extends AbstractController {
         }
 
         return $this->render('returns/bulk.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'maximumNumberOfCopies' => XhrPreviewAction::MaxNumberOfCopies
         ]);
     }
 }
