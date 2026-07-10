@@ -42,6 +42,22 @@
                     {% endif %}
                 </div>
             </div>
+
+            <div class="card-header">
+                <div class="d-flex">
+                    <div class="flex-fill text-muted align-self-center">
+                        <i class="fas fa-info-circle"></i> {{ 'books.regenerate_book_report.info'|trans }}
+                    </div>
+
+                    <form action="{{ path('regenerate_book_report') }}" method="post" class="ms-auto align-self-center">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('book_report') }}">
+                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                            {{ 'books.regenerate_book_report.label'|trans }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+
             {% if books|length == 0 %}
                 <div class="card-body">
                     <div class="bs-callout bs-callout-info mt-0 mb-0">

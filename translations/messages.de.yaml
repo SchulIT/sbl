@@ -114,6 +114,11 @@ books:
   empty: Aktuell sind keine Bücher im System hinterlegt.
   count: '%count% Bücher'
 
+  regenerate_book_report:
+    info: Die Verfügbarkeit der Buchexemplare wird nicht in Echtzeit berechnet. Die Berechnung findet stündlich automatisch statt und kann händisch angestoßen werden.
+    label: Verfügbarkeitsbericht neu generieren
+    success: Der Verfügbarkeitsbericht wird nun neu generiert. Diese Aktion kann einige Minuten in Anspruch nehmen.
+
   copies:
     label: Exemplare
     empty: Aktuell sind keine Exemplare im System hinterlegt.
