@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\BookCopy;
 use App\Entity\LabelTemplate;
-use App\Security\Voter\LabelTemplateVoter;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -13,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class DownloadLabelsRequestType extends AbstractType {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void {
         $builder
             ->add('copies', EntityType::class, [

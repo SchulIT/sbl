@@ -7,6 +7,7 @@ use App\Http\HttpUtils;
 use App\Label\DownloadLabelsRequest;
 use App\Label\PdfCreator;
 use App\Repository\BookCopyRepositoryInterface;
+use App\Settings\AppSettings;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +20,15 @@ class GeneratePdfAction extends AbstractController {
     }
 
     #[Route('/labels/pdf', name: 'download_pdf_labels')]
-    public function download(Request $request, HttpUtils $httpUtils): Response {
+    public function download(
+        Request $request,
+        HttpUtils $httpUtils,
+        AppSettings $appSettings
+    ): Response {
         $this->denyAccessUnlessGranted('ROLE_BOOKS_ADMIN');
 
         $downloadRequest = new DownloadLabelsRequest();
+        $downloadRequest->template = $appSettings->defaultLabelTemplate;
 
         if($request->query->has('copies')) {
             $ids = $httpUtils->parseCharacterSeparatedRequestParamAsIntArray($request, 'copies');

@@ -167,37 +167,11 @@ settings:
     custom_css:
       label: Benutzerdefiniertes CSS
       help: Hier kann benutzerdefiniertes CSS eingebunden werden, um die Software nach eigenen Wünschen einzufärben.
+
   labels:
-    label: Etiketten
-    rows:
-      label: Anzahl Zeilen
-      help: Gibt an, wie viele Etiketten untereinander gedruckt werden sollen.
-    columns:
-      label: Anzahl Spalten
-      help: Gibt an, wie viele Etiketten nebeneinander gedruckt werden sollen.
-    margin:
-      top:
-        label: Seitenrand (oben)
-        help: in mm
-      left:
-        label: Seitenrand (links)
-        help: in mm
-      right:
-        label: Seitenrand (rechts)
-        help: in mm
-      bottom:
-        label: Seitenrand (unten)
-        help: in mm
-    cell:
-      width:
-        label: Etikettenbreite
-        help: in mm
-      height:
-        label: Etikettenhöhe
-        help: in mm
-      padding:
-        label: Innenabstand
-        help: Innenabstand der Etiketten (in mm)
+    default:
+      label: Standard-Etikett
+      help: Hier kann das Etikett ausgewählt werden, was standardmäßig verwendet wird. Dieses wird beim Drucken automatisch vorausgewählt.
 
 select:
   grade: Alle Klassen
@@ -262,6 +236,36 @@ labels:
     offset:
       label: Offset
       help: Die hier angegebene Zahl bestimmt, wie viele Etiketten zu Beginn der ersten Seite leer gelassen werden. So kann bereits in Teilen verwendetes Etikettenpapier wiederverwendet werden.
+
+  rows:
+    label: Anzahl Zeilen
+    help: Gibt an, wie viele Etiketten untereinander gedruckt werden sollen.
+  columns:
+    label: Anzahl Spalten
+    help: Gibt an, wie viele Etiketten nebeneinander gedruckt werden sollen.
+  margin:
+    top:
+      label: Seitenrand (oben)
+      help: in mm
+    left:
+      label: Seitenrand (links)
+      help: in mm
+    right:
+      label: Seitenrand (rechts)
+      help: in mm
+    bottom:
+      label: Seitenrand (unten)
+      help: in mm
+  cell:
+    width:
+      label: Etikettenbreite
+      help: in mm
+    height:
+      label: Etikettenhöhe
+      help: in mm
+    padding:
+      label: Innenabstand
+      help: Innenabstand der Etiketten (in mm)
 
 
 not_available: N/A

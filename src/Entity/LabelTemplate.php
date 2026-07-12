@@ -5,10 +5,11 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-class LabelTemplate {
+class LabelTemplate implements Stringable {
 
     use IdTrait;
     use UuidTrait;
@@ -158,5 +159,9 @@ class LabelTemplate {
     public function setCellPaddingMM(float $cellPaddingMM): LabelTemplate {
         $this->cellPaddingMM = $cellPaddingMM;
         return $this;
+    }
+
+    public function __toString(): string {
+        return $this->getName();
     }
 }

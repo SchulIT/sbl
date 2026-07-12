@@ -20,40 +20,40 @@ class LabelTemplateType extends AbstractType {
                 'required' => false
             ])
             ->add('rows', IntegerType::class, [
-                'label' => 'settings.labels.rows.label',
-                'help' => 'settings.labels.rows.help'
+                'label' => 'labels.rows.label',
+                'help' => 'labels.rows.help'
             ])
             ->add('columns',  IntegerType::class, [
-                'label' => 'settings.labels.columns.label',
-                'help' => 'settings.labels.columns.help'
+                'label' => 'labels.columns.label',
+                'help' => 'labels.columns.help'
             ])
             ->add('topMarginMM',  NumberType::class, [
-                'label' => 'settings.labels.margin.top.label',
-                'help' => 'settings.labels.margin.top.help'
+                'label' => 'labels.margin.top.label',
+                'help' => 'labels.margin.top.help'
             ])
             ->add('bottomMarginMM',  NumberType::class, [
-                'label' => 'settings.labels.margin.bottom.label',
-                'help' => 'settings.labels.margin.bottom.help'
+                'label' => 'labels.margin.bottom.label',
+                'help' => 'labels.margin.bottom.help'
             ])
             ->add('leftMarginMM',  NumberType::class, [
-                'label' => 'settings.labels.margin.left.label',
-                'help' => 'settings.labels.margin.left.help'
+                'label' => 'labels.margin.left.label',
+                'help' => 'labels.margin.left.help'
             ])
             ->add('rightMarginMM',  NumberType::class, [
-                'label' => 'settings.labels.margin.right.label',
-                'help' => 'settings.labels.margin.right.help'
+                'label' => 'labels.margin.right.label',
+                'help' => 'labels.margin.right.help'
             ])
             ->add('cellWidthMM', NumberType::class, [
-                'label' => 'settings.labels.cell.width.label',
-                'help' => 'settings.labels.cell.width.help'
+                'label' => 'labels.cell.width.label',
+                'help' => 'labels.cell.width.help'
             ])
             ->add('cellHeightMM',   NumberType::class, [
-                'label' => 'settings.labels.cell.height.label',
-                'help' => 'settings.labels.cell.height.help'
+                'label' => 'labels.cell.height.label',
+                'help' => 'labels.cell.height.help'
             ])
             ->add('cellPaddingMM', NumberType::class, [
-                'label' => 'settings.labels.cell.padding.label',
-                'help' => 'settings.labels.cell.padding.help'
+                'label' => 'labels.cell.padding.label',
+                'help' => 'labels.cell.padding.help'
             ]);
     }
 }
