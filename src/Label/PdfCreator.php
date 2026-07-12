@@ -2,14 +2,19 @@
 
 namespace App\Label;
 
+use App\Entity\BookCopy;
 use App\Entity\LabelTemplate;
+use App\Repository\BookCopyRepositoryInterface;
+use DateTime;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use TCPDF;
 
 readonly class PdfCreator {
 
-    public function __construct() { }
+    public function __construct(
+        private BookCopyRepositoryInterface $bookCopyRepository
+    ) { }
 
     public function createPdfResponse(DownloadLabelsRequest $request): Response {
         $response = new Response($this->createPdf($request), 200, [
@@ -28,6 +33,8 @@ readonly class PdfCreator {
     public function createPdf(DownloadLabelsRequest $request): string {
         $label = $request->template;
 
+        $this->bookCopyRepository->beginTransaction();
+
         $pdf = $this->createTCPDF($label);
         $pdf->AddPage();
 
@@ -40,6 +47,14 @@ readonly class PdfCreator {
         $cellWidth = $label->getCellWidthMM() - 2 * $label->getCellPaddingMM();
 
         $copies = $request->copies;
+
+        if($request->skipAlreadyPrinted) {
+            $copies = array_filter(
+                $copies,
+                fn(BookCopy $copy): bool => $copy->getLabelPrintedAt() === null
+            );
+        }
+
         array_unshift(
             $copies,
             ...array_fill(0, $request->offset, null)
@@ -56,6 +71,11 @@ readonly class PdfCreator {
             );*/
 
             if ($copy !== null) {
+                if($request->setPrintedAtDate) {
+                    $copy->setLabelPrintedAt(new DateTime());
+                    $this->bookCopyRepository->persist($copy);
+                }
+
                 $pdf->write1DBarcode(
                     $copy->getBarcodeId(),
                     'C39',
@@ -96,6 +116,8 @@ readonly class PdfCreator {
                 $row = 1;
             }
         }
+
+        $this->bookCopyRepository->commit();
 
         return $pdf->Output('barcodes.pdf', 'S');
     }

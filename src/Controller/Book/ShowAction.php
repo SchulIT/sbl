@@ -28,7 +28,8 @@ class ShowAction extends AbstractController {
         BookCopyRepositoryInterface $copyRepository,
         CheckoutManager $checkoutManager,
         #[MapQueryParameter] int $page = 1,
-        #[MapQueryParameter] int $limit = 25
+        #[MapQueryParameter] int $limit = 25,
+        #[MapQueryParameter(name: 'not_printed')] bool $onlyNotPrinted = false
     ): Response {
         $this->denyAccessUnlessGranted(BookVoter::SHOW, $book);
 
@@ -46,11 +47,12 @@ class ShowAction extends AbstractController {
             ]);
         }
 
-        $copies = $copyRepository->findByBookPaginated($book, new PaginationQuery(page: $page, limit: $limit));
+        $copies = $copyRepository->findByBookPaginated($book, $onlyNotPrinted, new PaginationQuery(page: $page, limit: $limit));
 
         return $this->render('books/show.html.twig', [
             'book' => $book,
             'copies' => $copies,
+            'not_printed' => $onlyNotPrinted,
             'form' => $createForm->createView(),
             'manager' => $checkoutManager
         ]);

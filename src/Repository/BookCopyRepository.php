@@ -38,7 +38,7 @@ class BookCopyRepository extends AbstractTransactionalRepository implements Book
             ->getResult();
     }
 
-    public function findByBookPaginated(Book $book, PaginationQuery $paginationQuery): PaginatedResult {
+    public function findByBookPaginated(Book $book, bool $onlyNotPrinted = false, PaginationQuery $paginationQuery): PaginatedResult {
         $qb = $this->em->createQueryBuilder()
             ->select(['c', 'b'])
             ->from(BookCopy::class, 'c')
@@ -47,6 +47,10 @@ class BookCopyRepository extends AbstractTransactionalRepository implements Book
             ->addOrderBy('c.id', 'ASC')
             ->where('c.book = :book')
             ->setParameter('book', $book);
+
+        if($onlyNotPrinted) {
+            $qb->andWhere('c.labelPrintedAt IS NULL');
+        }
 
         return PaginatedResult::fromQueryBuilder($qb, $paginationQuery);
     }

@@ -6,6 +6,8 @@ use App\Entity\LabelTemplate;
 
 interface LabelRepositoryInterface {
 
+    public function findOneById(int $id): ?LabelTemplate;
+
     /**
      * @return LabelTemplate[]
      */

@@ -13,7 +13,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 readonly class EntityType implements ParameterTypeInterface, ParameterTypeWithFormDefaultsInterface {
 
     public function __construct(private ManagerRegistry $registry) {
-
     }
 
     #[Override]

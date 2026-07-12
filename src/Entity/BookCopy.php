@@ -31,6 +31,9 @@ class BookCopy {
     #[Gedmo\Timestampable(on: 'create')]
     private DateTime $createdAt;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private DateTime|null $labelPrintedAt = null;
+
     /**
      * @var Collection<Checkout>
      */
@@ -68,6 +71,15 @@ class BookCopy {
 
     public function getCreatedAt(): DateTime {
         return $this->createdAt;
+    }
+
+    public function getLabelPrintedAt(): ?DateTime {
+        return $this->labelPrintedAt;
+    }
+
+    public function setLabelPrintedAt(?DateTime $labelPrintedAt): BookCopy {
+        $this->labelPrintedAt = $labelPrintedAt;
+        return $this;
     }
 
     public function getComment(): ?string {

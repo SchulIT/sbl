@@ -30,6 +30,15 @@
                                             {% endfor %}
                                         </select>
                                     </div>
+
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="not_printed" value="1" {% if not_printed %}checked{% endif %} id="onlyNotPrinted" data-trigger="submit">
+                                            <label class="form-check-label" for="onlyNotPrinted">
+                                                {{ 'books.copies.only_not_printed'|trans }}
+                                            </label>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                             <div class="actions">
@@ -61,6 +70,7 @@
                                     <col class="column-sm">
                                     <col class="column-sm">
                                     <col>
+                                    <col>
                                     <col class="column-lg">
                                     <col class="column-140">
                                 </colgroup>
@@ -72,6 +82,7 @@
                                     </td>
                                     <td>{{ 'label.id'|trans }}</td>
                                     <td>{{ 'label.created_at'|trans }}</td>
+                                    <td>{{ 'label.label_printed_at'|trans }}</td>
                                     <td>{{ 'label.status'|trans }}</td>
                                     <td></td>
                                 </tr>
@@ -90,6 +101,13 @@
                                         </td>
                                         <td class="align-middle">
                                             {{ copy.createdAt|format_datetime }}
+                                        </td>
+                                        <td class="align-middle">
+                                            {% if copy.labelPrintedAt is not null %}
+                                                {{ copy.labelPrintedAt|format_datetime }}
+                                            {% else %}
+                                                <span class="badge text-bg-secondary">{{ 'not_available'|trans }}</span>
+                                            {% endif %}
                                         </td>
                                         <td class="align-middle">
                                             {% set status = manager.status(copy) %}

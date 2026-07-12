@@ -31,6 +31,7 @@ label:
   name: Name
   description: Beschreibung
   preview: Vorschau
+  label_printed_at: Etikett gedruckt am
 
 actions:
   add: Hinzufügen
@@ -122,6 +123,7 @@ books:
   copies:
     label: Exemplare
     empty: Aktuell sind keine Exemplare im System hinterlegt.
+    only_not_printed: Nur Exemplare ohne gedrucktes Etikett anzeigen
     cannot_checkout: Exemplar nicht ausleihbar
     limit: '%count% Exemplare anzeigen'
     count: '%count% Exemplare'
@@ -236,6 +238,12 @@ labels:
     offset:
       label: Offset
       help: Die hier angegebene Zahl bestimmt, wie viele Etiketten zu Beginn der ersten Seite leer gelassen werden. So kann bereits in Teilen verwendetes Etikettenpapier wiederverwendet werden.
+    set_printed_at:
+      label: Druckdatum vermerken
+      help: Wenn diese Option aktiv ist, wird in der Datenbank das Druckdatum für das Exemplar gesetzt. Damit kann verhindert werden, dass das Etikett erneut ausgedruckt und verwendet wird.
+    skip_already_printed:
+      label: gedruckte Etiketten überspringen
+      help: Wenn diese Option aktiv ist, werden Etiketten, die bereits gedruckt wurden, übersprungen.
 
   rows:
     label: Anzahl Zeilen

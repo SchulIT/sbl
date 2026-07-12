@@ -6,6 +6,12 @@ use App\Entity\LabelTemplate;
 
 class LabelRepository extends AbstractRepository implements LabelRepositoryInterface {
 
+    public function findOneById(int $id): ?LabelTemplate {
+        return $this->em->getRepository(LabelTemplate::class)->findOneBy([
+            'id' => $id
+        ]);
+    }
+
     public function findAll(): array {
         return $this->em->getrepository(LabelTemplate::class)->findBy([], [
             'name' => 'asc'
