@@ -1,12 +1,10 @@
 import TomSelect from "tom-select";
-import { Modal, Tooltip, Popover } from "bootstrap";
+import { Modal, Tooltip } from "bootstrap";
 import "../styles/app.css";
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('select[data-select=tom-select]').forEach(function(el) {
-        let settings = { };
-
-        let select = new TomSelect(el, settings);
+        new TomSelect(el, { });
     });
 
     document.querySelectorAll('[title]').forEach(function(el) {
@@ -22,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             eventName = 'click';
         }
 
-        el.addEventListener(eventName, function (event) {
+        el.addEventListener(eventName, function () {
             let confirmModalSelector = el.getAttribute('data-confirm');
             let form = this.closest('form');
 

@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let $preview = document.getElementById('checkout_preview');
     let $select = document.querySelector($preview.getAttribute('data-select'));
 
-    let tomSelect = new TomSelect($select, {
+    new TomSelect($select, {
         create: true
     });
 
@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let $modal = document.getElementById('modalError');
     let maximumNumberOfCopies = parseInt($preview.getAttribute('data-maximum'));
 
-    $select.addEventListener('change', async event => {
+    $select.addEventListener('change', async () => {
         updateCounter($select, document.getElementById('counter'));
         await updatePreview($select, $preview, url, $modal, maximumNumberOfCopies);
     });
@@ -64,8 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    $user.addEventListener('change', async event => {
-        console.log('onChange');
+    $user.addEventListener('change',  () => {
         $select.tomselect.focus();
     });
 });
