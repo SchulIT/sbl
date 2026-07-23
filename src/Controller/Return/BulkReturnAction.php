@@ -19,7 +19,7 @@ class BulkReturnAction extends AbstractController {
     }
 
 
-    #[Route('/return', name: 'return')]
+    #[Route('/bulk_return', name: 'return')]
     public function __invoke(
         Request $request,
         TranslatorInterface $translator

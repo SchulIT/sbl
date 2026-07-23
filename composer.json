@@ -54,6 +54,7 @@
         "symfony/translation": "^7.3",
         "symfony/twig-bundle": "^7.3",
         "symfony/uid": "^7.3",
+        "symfony/ux-autocomplete": "*",
         "symfony/validator": "^7.3",
         "symfony/web-link": "^7.3",
         "symfony/yaml": "^7.3",

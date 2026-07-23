@@ -38,6 +38,12 @@ readonly class Builder {
                 ->setExtra('icon', 'fa fa-reply');
         }
 
+        if($this->authorizationChecker->isGranted('ROLE_BOOKS_ADMIN')) {
+            $menu->addChild('return_date.label', [
+                'route' => 'return_date'
+            ])
+                ->setExtra('icon', 'fa fa-calendar');
+        }
 
         if($this->authorizationChecker->isGranted('ROLE_BOOKS_ADMIN')) {
             $menu->addChild('books.label', [

@@ -24,6 +24,10 @@ return [
         'path' => './assets/js/import.js',
         'entrypoint' => true,
     ],
+    'autocomplete' => [
+        'path' => './assets/js/autocomplete.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.8',
     ],

@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Book;
 use App\Entity\Borrower;
 use App\Entity\Checkout;
+use DateTime;
+use Override;
 
 class CheckoutRepository extends AbstractRepository implements CheckoutRepositoryInterface {
 
@@ -42,6 +45,44 @@ class CheckoutRepository extends AbstractRepository implements CheckoutRepositor
         return $this->em->createQueryBuilder()
             ->select('COUNT(1)')
             ->from(Checkout::class, 'c')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    #[Override]
+    public function setExpectedReturnDate(Book $book, DateTime $dueDate, bool $overrideExistingReturnDates = false, array $grades = []): int {
+        $qb = $this->em->createQueryBuilder()
+            ->update(Checkout::class, 'c')
+            ->set('c.expectedReturnDate', ':dueDate')
+            ->setParameter('dueDate', $dueDate)
+            ->setParameter('book', $book);
+
+        $qbInner = $this->em->createQueryBuilder()
+            ->select('cInner.id')
+            ->from(Checkout::class, 'cInner')
+            ->leftJoin('cInner.borrower', 'bInner')
+            ->leftJoin('cInner.bookCopy', 'copyInner')
+            ->leftJoin('copyInner.book', 'bookInner')
+            ->where('bookInner.id = :book')
+            ->andWhere('cInner.end IS NULL');
+
+        if($overrideExistingReturnDates === false) {
+            $qbInner
+                ->andWhere('cInner.expectedReturnDate IS NULL');
+        }
+
+        if(count($grades) > 0) {
+            $qbInner
+                ->andWhere('bInner.grade IN (:grades)');
+            $qb->setParameter('grades', $grades);
+        }
+
+        return $qb
+            ->where(
+                $qb->expr()->in(
+                    'c.id', $qbInner->getDQL()
+                )
+            )
             ->getQuery()
             ->getSingleScalarResult();
     }

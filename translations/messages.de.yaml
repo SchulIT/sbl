@@ -82,6 +82,8 @@ checkouts:
     label: Aktive Ausleihen
     empty: Keine aktiven Ausleihen.
 
+  expected_return_date: Erwartete Rückgabe
+
   past:
     label: Abgeschlossene Ausleihen
     empty: Es gibt noch keine abgeschlossenen Ausleihen.
@@ -181,6 +183,7 @@ select:
   borrower: Entleiher auswählen
   copy: Exemplar durch Barcode auswählen
   copies: Barcode eingeben und mit Enter bestätigen (Mehrfachauswahl möglich)
+  book: Buch auswählen
 
 filter:
   label: Filter
@@ -280,5 +283,20 @@ labels:
       label: Innenabstand
       help: Innenabstand der Etiketten (in mm)
 
+return_date:
+  label: Rückgabedatum
+
+  book: Buch
+  grades:
+    label: Klassen
+    help: Optional. Das Rückgabedatum wird nur bei den Klassen gesetzt, die hier ausgewählt sind.
+  return_date:
+    label: Rückgabedatum
+    help: Das erwartete Rückgabedatum.
+  override_existing:
+    label: Vorhandene Rückgabedaten überschreiben
+    help: Optional. Wenn diese Option aktiv ist, werden bereits vorhandene Rückgabedaten überschrieben. Wenn die Option nicht aktiv ist, bleiben vorhandene Rückgabedaten eintragen.
+
+  success: 'Bei %count% Bücherausgaben wurde das Rückgabedatum auf %date% gesetzt'
 
 not_available: N/A

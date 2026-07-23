@@ -29,6 +29,9 @@ class Checkout {
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $comment;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?DateTime $expectedReturnDate = null;
+
     public function __construct() {
         $this->uuid = Uuid::v4()->toString();
     }
@@ -76,5 +79,22 @@ class Checkout {
     public function setComment(?string $comment): Checkout {
         $this->comment = $comment;
         return $this;
+    }
+
+    public function getExpectedReturnDate(): ?DateTime {
+        return $this->expectedReturnDate;
+    }
+
+    public function setExpectedReturnDate(?DateTime $expectedReturnDate): Checkout {
+        $this->expectedReturnDate = $expectedReturnDate;
+        return $this;
+    }
+
+    public function isOverdue(DateTime $today): bool {
+        if($this->getExpectedReturnDate() === null) {
+            return false;
+        }
+
+        return $this->getExpectedReturnDate() < $today;
     }
 }
