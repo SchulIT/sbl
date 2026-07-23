@@ -52,6 +52,7 @@
 {% block css %}
     <link rel="stylesheet" href="{{ preload(asset('bundles/common/app.css')) }}" type="text/css">
     <link rel="stylesheet" href="{{ preload(asset('vendor/@fortawesome/fontawesome-free/css/all.css')) }}" type="text/css">
+    <link rel="stylesheet" href="{{ preload(asset('vendor/tom-select/dist/css/tom-select.bootstrap5.min.css')) }}" type="text/css">
 
     {% set customCSS = customCSS() %}
     {% if customCSS is not empty %}

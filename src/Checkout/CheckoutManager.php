@@ -11,12 +11,18 @@ use DateTime;
 
 readonly class CheckoutManager {
 
-    public function __construct(private CheckoutRepositoryInterface $repository, private BookCopyRepositoryInterface $bookCopyRepository, private CheckoutRepositoryInterface $checkoutRepository, ) {
+    public function __construct(
+        private CheckoutRepositoryInterface $repository,
+        private BookCopyRepositoryInterface $bookCopyRepository,
+        private CheckoutRepositoryInterface $checkoutRepository
+    ) {
 
     }
 
     public function bulkCheckout(BulkCheckoutRequest $request): void {
-        foreach($request->copies as $copy) {
+        $copies = $this->bookCopyRepository->findAllByIds($request->copies);
+
+        foreach($copies as $copy) {
             $this->checkout($copy, $request->borrower);
         }
     }
@@ -52,7 +58,9 @@ readonly class CheckoutManager {
         $borrowers = [ ];
         $borrowersCount = [ ];
 
-        foreach($request->copies as $copy) {
+        $copies = $this->bookCopyRepository->findAllByIds($request->copies);
+
+        foreach($copies as $copy) {
             $borrower = $this->return($copy);
 
             if($borrower === null) {

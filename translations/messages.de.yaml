@@ -179,8 +179,8 @@ select:
   grade: Alle Klassen
   type: Alle Arten
   borrower: Entleiher auswählen
-  copy: Exemplar durch Barcode oder Buchtitel auswählen
-  copies: Exemplare durch Barcode oder Buchtitel auswählen
+  copy: Exemplar durch Barcode auswählen
+  copies: Exemplare durch Barcode auswählen
 
 filter:
   label: Filter

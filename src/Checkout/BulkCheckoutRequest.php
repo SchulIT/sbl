@@ -12,7 +12,7 @@ class BulkCheckoutRequest {
     public ?Borrower $borrower = null;
 
     /**
-     * @var BookCopy[]
+     * @var int[]
      */
     #[Assert\Count(min: 1)]
     public array $copies = [ ];

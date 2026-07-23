@@ -8,7 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class BulkReturnRequest {
     /**
-     * @var BookCopy[]
+     * @var int[]
      */
     #[Assert\Count(min: 1, max: XhrPreviewAction::MaxNumberOfCopies)]
     public array $copies = [ ];

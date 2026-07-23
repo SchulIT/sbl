@@ -35,9 +35,6 @@ return [
         'version' => '7.2.0',
         'type' => 'css',
     ],
-    'choices.js' => [
-        'version' => '11.2.1',
-    ],
     '@popperjs/core' => [
         'version' => '2.11.8',
     ],
@@ -46,5 +43,22 @@ return [
     ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
+    ],
+    'tom-select' => [
+        'version' => '2.6.2',
+    ],
+    '@orchidjs/sifter' => [
+        'version' => '1.1.0',
+    ],
+    '@orchidjs/unicode-variants' => [
+        'version' => '1.1.2',
+    ],
+    'tom-select/dist/css/tom-select.default.min.css' => [
+        'version' => '2.6.2',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.bootstrap5.min.css' => [
+        'version' => '2.6.2',
+        'type' => 'css',
     ],
 ];

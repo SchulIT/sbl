@@ -26,13 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let studentId = $studentButton.getAttribute('data-selectstudent');
             let $targetSelect = document.querySelector($studentButton.getAttribute('data-target'));
-            let $focusTarget = document.querySelector($studentButton.getAttribute('data-focus-target'));
 
-            $targetSelect.choices.setChoiceByValue(studentId);
-
-            if($focusTarget.choices.getValue().length === 0) {
-                $focusTarget.choices.showDropdown(false);
-            }
+            $targetSelect.tomselect.setValue(studentId);
         });
     }
 

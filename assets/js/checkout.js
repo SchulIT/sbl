@@ -1,4 +1,5 @@
 import axios from 'axios';
+import TomSelect from "tom-select";
 import { Modal } from 'bootstrap';
 
 async function updatePreview($select, $preview, url, $modal, maximumNumberOfCopies) {
@@ -34,18 +35,20 @@ function updateCounter($select, $counter) {
 }
 
 function getCopies($select) {
-    // Selected options:
-    let copies = [ ];
-    for(let option of $select.selectedOptions) {
-        copies.push(option.value);
-    }
-
-    return copies;
+    console.log($select);
+    return $select.value.split(',');
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
     let $preview = document.getElementById('checkout_preview');
     let $select = document.querySelector($preview.getAttribute('data-select'));
+
+    console.log($select);
+
+    let tomSelect = new TomSelect($select, {
+        create: true
+    });
+
     let url = $preview.getAttribute('data-url');
     let $modal = document.getElementById('modalError');
     let maximumNumberOfCopies = parseInt($preview.getAttribute('data-maximum'));
@@ -63,9 +66,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    $user.addEventListener('keyup', async event => {
-        if(event.key === 'Enter') {
-            $select.focus();
-        }
+    $user.addEventListener('change', async event => {
+        console.log('onChange');
+        $select.tomselect.focus();
     });
 });

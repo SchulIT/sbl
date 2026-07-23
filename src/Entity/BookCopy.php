@@ -13,6 +13,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity]
 class BookCopy {
+
+    public const int BARCODE_PADDING = 5;
+
     use IdTrait;
     use UuidTrait;
 
@@ -47,7 +50,7 @@ class BookCopy {
     }
 
     public function getBarcodeId(): string {
-        return mb_str_pad( $this->getId(), 5, '0', STR_PAD_LEFT);
+        return self::computeBarcodeId($this->getId());
     }
 
     public function getBook(): Book {
@@ -105,5 +108,9 @@ class BookCopy {
 
     public function removeCheckout(Checkout $checkout): void {
         $this->checkouts->removeElement($checkout);
+    }
+
+    public static function computeBarcodeId(int $id): string {
+        return mb_str_pad($id, self::BARCODE_PADDING, '0', STR_PAD_LEFT);
     }
 }

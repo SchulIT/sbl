@@ -1,28 +1,12 @@
-import Choices from "choices.js";
+import TomSelect from "tom-select";
 import { Modal, Tooltip, Popover } from "bootstrap";
 import "../styles/app.css";
 
 document.addEventListener('DOMContentLoaded', function() {
-    let initializeChoice = function(el) {
-        let removeItemButton = false;
+    document.querySelectorAll('select[data-select=tom-select]').forEach(function(el) {
+        let settings = { };
 
-        if(el.getAttribute('multiple') !== null) {
-            removeItemButton = true;
-        }
-
-        let config = {
-            itemSelectText: '',
-            shouldSort: false,
-            shouldSortItems: false,
-            removeItemButton: removeItemButton,
-            placeholder: true
-        };
-
-        el.choices = new Choices(el, config);
-    };
-
-    document.querySelectorAll('select[data-choice=true]').forEach(function(el) {
-        initializeChoice(el);
+        let select = new TomSelect(el, settings);
     });
 
     document.querySelectorAll('[title]').forEach(function(el) {
