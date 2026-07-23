@@ -180,7 +180,7 @@ select:
   type: Alle Arten
   borrower: Entleiher auswählen
   copy: Exemplar durch Barcode auswählen
-  copies: Exemplare durch Barcode auswählen
+  copies: Barcode eingeben und mit Enter bestätigen (Mehrfachauswahl möglich)
 
 filter:
   label: Filter
@@ -222,6 +222,11 @@ dashboard:
 labels:
   label: Etiketten
   empty: Aktuell sind keine Etikettenvorlagen im System hinterlegt.
+
+  default:
+    label: Standard
+    help: Das Standard-Label wird automatisch beim Drucken der Etiketten ausgewählt und kann in den Einstellungen geändert werden.
+
   add:
     label: Neue Etikettenvorlage
     success: Etikettenvorlage erfolgreich erstellt
