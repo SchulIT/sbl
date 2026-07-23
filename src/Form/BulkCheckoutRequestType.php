@@ -30,6 +30,8 @@ class BulkCheckoutRequestType extends AbstractType {
                 'choice_label' => fn(BookCopy $copy) => sprintf('[%s] %s', str_pad($copy->getBarcodeId(), 5, '0'), !empty($copy->getBook()->getBarcodeTitle()) ? $copy->getBook()->getBarcodeTitle() : $copy->getBook()->getTitle()),
                 'query_builder' => function(EntityRepository $repository): QueryBuilder {
                     return $repository->createQueryBuilder('c')
+                        ->select(['c', 'b'])
+                        ->leftJoin('c.book', 'b')
                         ->where('c.canCheckout = true');
                 },
                 'attr' => [
