@@ -23,7 +23,11 @@ class ReturnAction extends AbstractController {
     }
 
     #[Route('/book/copy/{uuid}/return', name: 'return_copy')]
-    public function returnCopy(#[MapEntity(mapping: ['uuid' => 'uuid'])] BookCopy $copy, Request $request): RedirectResponse|Response {
+    public function returnCopy(
+        #[MapEntity(mapping: ['uuid' => 'uuid'])] BookCopy $copy,
+        Request $request,
+        TranslatorInterface $translator
+    ): RedirectResponse|Response {
         $this->denyAccessUnlessGranted(BookCopyVoter::RETURN, $copy);
 
         /** @var Checkout|null $lastCheckout */
@@ -50,7 +54,10 @@ class ReturnAction extends AbstractController {
 
         if($form->isSubmitted() && $form->isValid()) {
             $this->checkoutManager->return($copy);
-            $this->addFlash('success', 'return.success');
+
+            $this->addFlash('success', $translator->trans('return.success', [
+                '%count%' => 1
+            ]));
 
             return $this->redirectToRoute('book_copy', [
                 'uuid' => $copy->getUuid(),
