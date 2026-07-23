@@ -43,8 +43,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let $preview = document.getElementById('checkout_preview');
     let $select = document.querySelector($preview.getAttribute('data-select'));
 
-    console.log($select);
-
     let tomSelect = new TomSelect($select, {
         create: true
     });
