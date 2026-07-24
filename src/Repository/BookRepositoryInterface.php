@@ -8,6 +8,8 @@ interface BookRepositoryInterface {
 
     public function findOneById(int $id): ?Book;
 
+    public function findOneByUuid(string $uuid): ?Book;
+
     /**
      * @return PaginatedResult<Book>
      */

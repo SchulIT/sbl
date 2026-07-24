@@ -16,6 +16,11 @@ class BookRepository extends AbstractRepository implements BookRepositoryInterfa
             ->findOneBy(['id' => $id]);
     }
 
+    public function findOneByUuid(string $uuid): ?Book {
+        return $this->em->getRepository(Book::class)
+            ->findOneBy(['uuid' => $uuid]);
+    }
+
     public function find(PaginationQuery $paginationQuery, ?string $searchQuery = null): PaginatedResult {
         $qb = $this->em->createQueryBuilder()
             ->select(['b'])

@@ -30,13 +30,19 @@ class IndexAction extends AbstractController {
 
         #[MapQueryParameter] int $page = 1,
         #[MapQueryParameter] int $limit = 25,
-        #[MapEntity(mapping: ['book' => 'uuid'])] Book|null $book = null,
+        #[MapQueryParameter(name: 'book', filter: FILTER_DEFAULT, flags: FILTER_FLAG_EMPTY_STRING_NULL | FILTER_NULL_ON_FAILURE)] string|null $bookUuid = null,
         #[MapQueryParameter(name: 'grade', filter: FILTER_DEFAULT, flags: FILTER_FLAG_EMPTY_STRING_NULL | FILTER_NULL_ON_FAILURE)] string|null $grade = null,
         #[MapQueryParameter(name: 'all')] bool $includePastCheckouts = false,
         #[MapQueryParameter(name: 'overdue')] bool $onlyShowOverdue = false
     ): Response {
         if($onlyShowOverdue) {
             $includePastCheckouts = false;
+        }
+
+        $book = null;
+
+        if(!empty($bookUuid)) {
+            $book = $this->bookRepository->findOneByUuid($bookUuid);
         }
 
         $checkouts = $this->checkoutRepository->findPaginated(new PaginationQuery(page: $page, limit: $limit), $book, $grade, !$includePastCheckouts, $onlyShowOverdue ? $this->dateHelper->getToday() : null);

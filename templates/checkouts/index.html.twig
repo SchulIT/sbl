@@ -22,7 +22,7 @@
                                         <select name="book" class="form-select form-select-sm" data-trigger="submit">
                                             <option value="">{{ 'select.book'|trans }}</option>
                                             {% for b in books %}
-                                                <option value="{{ b.uuid }}">
+                                                <option value="{{ b.uuid }}" {% if b == book %}selected{% endif %}>
                                                     {% if b.barcodeTitle is not empty %}
                                                         {{ b.barcodeTitle }}
                                                     {% else %}
