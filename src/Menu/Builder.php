@@ -45,6 +45,13 @@ readonly class Builder {
                 ->setExtra('icon', 'fa fa-calendar');
         }
 
+        if($this->authorizationChecker->isGranted(CheckoutVoter::SHOW_ANY)) {
+            $menu->addChild('checkouts.label', [
+                'route' => 'checkouts'
+            ])
+                ->setExtra('icon', 'fa fa-list');
+        }
+
         if($this->authorizationChecker->isGranted('ROLE_BOOKS_ADMIN')) {
             $menu->addChild('books.label', [
                 'route' => 'books'

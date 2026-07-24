@@ -86,4 +86,54 @@ class CheckoutRepository extends AbstractRepository implements CheckoutRepositor
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    #[Override]
+    public function findPaginated(PaginationQuery $paginationQuery, ?Book $book = null, ?string $grade = null, bool $onlyActive = true, DateTime|null $todayForOverdue = null): PaginatedResult {
+        $qb = $this->em->createQueryBuilder()
+            ->select(['c', 'b', 'copy', 'book'])
+            ->from(Checkout::class, 'c')
+            ->leftJoin('c.borrower', 'b')
+            ->leftJoin('c.bookCopy', 'copy')
+            ->leftJoin('copy.book', 'book')
+            ->orderBy('b.lastname', 'asc')
+            ->addOrderBy('b.firstname', 'asc');
+
+        $qbInner = $this->em->createQueryBuilder()
+            ->select('cInner.id')
+            ->from(Checkout::class, 'cInner')
+            ->leftJoin('cInner.borrower', 'bInner')
+            ->leftJoin('cInner.bookCopy', 'copyInner')
+            ->leftJoin('copyInner.book', 'bookInner');
+
+        if($onlyActive) {
+            $qbInner->andWhere('cInner.end IS NULL');
+        }
+
+        if($todayForOverdue !== null) {
+            $qbInner->andWhere('cInner.expectedReturnDate IS NOT NULL')
+                ->andWhere('cInner.expectedReturnDate < :today');
+            $qb->setParameter('today', $todayForOverdue);
+        }
+
+        if($grade !== null) {
+            $qbInner->andWhere('bInner.grade = :grade');
+            $qb->setParameter('grade', $grade);
+        }
+
+        if($book !== null) {
+            $qbInner->andWhere('book.id = :book');
+            $qb->setParameter('book', $book->getId());
+        }
+
+        $qb->andWhere(
+            $qb->expr()->in(
+                'c.id', $qbInner->getDQL()
+            )
+        );
+
+        return PaginatedResult::fromQueryBuilder(
+            $qb,
+            $paginationQuery
+        );
+    }
 }

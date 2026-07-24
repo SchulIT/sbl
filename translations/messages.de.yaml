@@ -78,6 +78,18 @@ borrowers:
       help: Alle Entleiher (derselben Art wie angegeben), die nicht in der importierten Liste enthalten sind, werden gelöscht. Alle noch ausgeliehenen Bücher werden als "nicht ausleihbar" markiert.
 
 checkouts:
+  label: Ausleihen
+  count: '%count% Ausleihen'
+  empty: Keine Ausleihen gefunden.
+
+  book: Buch
+  copy: Exemplar
+  start: Beginn der Ausleihe
+  return: Rückgabe
+  expected_return: Erwartete Rückgabe
+  all: Abgeschlossene Ausleihen anzeigen
+  overdue: Nur überfällige Ausleihen anzeigen
+
   active:
     label: Aktive Ausleihen
     empty: Keine aktiven Ausleihen.
@@ -298,5 +310,6 @@ return_date:
     help: Optional. Wenn diese Option aktiv ist, werden bereits vorhandene Rückgabedaten überschrieben. Wenn die Option nicht aktiv ist, bleiben vorhandene Rückgabedaten eintragen.
 
   success: 'Bei %count% Bücherausgaben wurde das Rückgabedatum auf %date% gesetzt'
+
 
 not_available: N/A

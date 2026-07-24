@@ -17,7 +17,7 @@ class CheckoutAction extends AbstractController {
 
     }
 
-    #[Route('/checkout', name: 'checkout')]
+    #[Route('/bulk_checkout', name: 'checkout')]
     public function __invoke(Request $request): Response {
         $this->denyAccessUnlessGranted(CheckoutVoter::CHECKOUT);
 

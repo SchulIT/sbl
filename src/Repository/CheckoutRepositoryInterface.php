@@ -22,6 +22,16 @@ interface CheckoutRepositoryInterface {
 
     public function countAll(): int;
 
+    /**
+     * @param PaginationQuery $paginationQuery
+     * @param Book|null $book
+     * @param string|null $grade
+     * @param bool $onlyActive
+     * @param DateTime|null $todayForOverdue If this date is set, only checkouts with an expected return date BEFORE this date are returned
+     * @return PaginatedResult<Checkout>
+     */
+    public function findPaginated(PaginationQuery $paginationQuery, Book|null $book = null, string|null $grade = null, bool $onlyActive = true, DateTime|null $todayForOverdue = null): PaginatedResult;
+
     public function persist(Checkout $checkout): void;
 
     public function remove(Checkout $checkout): void;
