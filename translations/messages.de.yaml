@@ -214,6 +214,8 @@ dashboard:
         label: Anzahl Ausleihen
       active:
         label: Aktive Ausleihen
+      overdue:
+        label: Überfällige Rückgaben
     borrowers:
       total:
         label: Anzahl Entleiher

@@ -50,6 +50,18 @@ class CheckoutRepository extends AbstractRepository implements CheckoutRepositor
     }
 
     #[Override]
+    public function countOverdue(DateTime $today): int {
+        return $this->em->createQueryBuilder()
+            ->select('COUNT(c)')
+            ->from(Checkout::class, 'c')
+            ->where('c.end IS NULL')
+            ->andWhere('c.expectedReturnDate < :today')
+            ->setParameter('today', $today)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    #[Override]
     public function setExpectedReturnDate(Book $book, DateTime $dueDate, bool $overrideExistingReturnDates = false, array $grades = []): int {
         $qb = $this->em->createQueryBuilder()
             ->update(Checkout::class, 'c')

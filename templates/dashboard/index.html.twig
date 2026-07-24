@@ -10,7 +10,7 @@
 
 {% block content %}
     {% if is_granted('ROLE_BOOKS_ADMIN') or is_granted('ROLE_LENDER') or is_granted('ROLE_BORROWERS_ADMIN') %}
-        <div class="row row-cols-1 row-cols-sm-5 g-4 mb-4 d-none d-sm-flex">
+        <div class="row row-cols-1 row-cols-sm-6 g-4 mb-4 d-none d-sm-flex">
             <div class="col">
                 <div class="card h-100">
                     <div class="card-body">
@@ -25,6 +25,15 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ 'dashboard.stats.checkouts.active.label'|trans }}</h5>
                         <p class="display-6">{{ activeCheckouts }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ 'dashboard.stats.checkouts.overdue.label'|trans }}</h5>
+                        <p class="display-6">{{ overdueCheckouts }}</p>
                     </div>
                 </div>
             </div>

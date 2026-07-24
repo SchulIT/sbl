@@ -22,6 +22,8 @@ interface CheckoutRepositoryInterface {
 
     public function countAll(): int;
 
+    public function countOverdue(DateTime $today): int;
+
     /**
      * @param PaginationQuery $paginationQuery
      * @param Book|null $book
