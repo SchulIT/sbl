@@ -8,14 +8,16 @@
         {% endif %}
 
         <div class="align-self-start flex-fill">
-            {{ book.title }} <span class="badge text-bg-primary"><i class="fas fa-barcode"></i> {{ copy.barcodeId }}</span>
+            {{ book.title }}
 
-            {% if book.subtitle is not empty %}
-                <span class="text-muted d-block">{{ book.subtitle }}</span>
-            {% endif %}
+            <span class="badge text-bg-primary"><i class="fas fa-barcode"></i> {{ copy.barcodeId }}</span>
 
             {% if book.barcodeTitle is not empty %}
                 <span class="badge text-bg-secondary"><i class="fas fa-barcode"></i> {{ book.barcodeTitle }}</span>
+            {% endif %}
+
+            {% if book.subtitle is not empty %}
+                <span class="text-muted d-block">{{ book.subtitle }}</span>
             {% endif %}
 
             {% if manager.checkedOut(copy) %}
