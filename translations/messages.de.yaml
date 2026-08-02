@@ -123,6 +123,12 @@ return:
     label: Vorschau
   errors:
     not_checked_out: Das Exemplar wurde nicht ausgeliehen.
+  can_checkout:
+    label: Buch kann ausgeliehen werden
+    help: Diese Option gibt an, ob das Exemplar bzw. die Exemplare nach der Rückgabe noch ausleihbar sind.
+  comment:
+    label: Kommentar
+    help: Optional. Der Kommentar für das Exemplar bzw. die Exemplare gespeichert.
 
 books:
   label: Bücher

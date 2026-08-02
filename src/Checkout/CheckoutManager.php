@@ -61,7 +61,7 @@ readonly class CheckoutManager {
         $copies = $this->bookCopyRepository->findAllByIds($request->copies);
 
         foreach($copies as $copy) {
-            $borrower = $this->return($copy);
+            $borrower = $this->return($copy, $request->canCheckout, $request->comment);
 
             if($borrower === null) {
                 continue;
@@ -86,7 +86,7 @@ readonly class CheckoutManager {
         return $borrowers[$firstKey] ?? null;
     }
 
-    public function return(BookCopy $copy): ?Borrower {
+    public function return(BookCopy $copy, bool $canCheckout = true, string|null $comment = null): ?Borrower {
         /** @var Checkout|null $lastCheckout */
         $lastCheckout = $copy->getCheckouts()->first() ?? null;
 
@@ -96,6 +96,11 @@ readonly class CheckoutManager {
 
         $lastCheckout->setEnd(new DateTime());
         $this->repository->persist($lastCheckout);
+
+        $bookCopy = $lastCheckout->getBookCopy();
+        $bookCopy->setCanCheckout($canCheckout);
+        $bookCopy->setComment($comment);
+        $this->bookCopyRepository->persist($bookCopy);
 
         return $lastCheckout->getBorrower();
     }

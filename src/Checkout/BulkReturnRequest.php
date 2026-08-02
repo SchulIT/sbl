@@ -12,4 +12,9 @@ class BulkReturnRequest {
      */
     #[Assert\Count(min: 1, max: XhrPreviewAction::MaxNumberOfCopies)]
     public array $copies = [ ];
+
+    public bool $canCheckout = true;
+
+    #[Assert\NotBlank(allowNull: true)]
+    public string|null $comment = null;
 }
