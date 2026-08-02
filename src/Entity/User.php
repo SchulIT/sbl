@@ -135,4 +135,16 @@ class User implements UserInterface {
     public function __toString(): string {
         return $this->username;
     }
+
+    public function __serialize(): array {
+        return [
+            'id' => $this->getId(),
+            'username' => $this->getUsername()
+        ];
+    }
+
+    public function __unserialize(array $serialized) {
+        $this->id = $serialized['id'];
+        $this->username = $serialized['username'];
+    }
 }
