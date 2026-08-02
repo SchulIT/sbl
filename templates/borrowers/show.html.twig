@@ -34,7 +34,7 @@
                             <div class="flex-fill">
                                 <p class="mb-1">
                                     <a href="{{ path('book_copy', { uuid: checkout.bookCopy.uuid}) }}">{{ book.title }}</a>
-                                    <span class="badge text-bg-primary"><i class="fas fa-barcode"></i> {{ checkout.bookCopy.barcodeId }}</span>
+                                    <a class="badge text-bg-primary text-decoration-none" href="{{ path('book_copy', { uuid: checkout.bookCopy.uuid }) }}"><i class="fas fa-barcode"></i> {{ checkout.bookCopy.barcodeId }}</a>
 
                                     {% if book.subtitle is not empty %}
                                         <span class="text-muted d-block">{{ book.subtitle }}</span>
@@ -54,11 +54,17 @@
                                         {% endif %}
                                     {% endif %}
                                 </p>
+
+                                {% if checkout.comment is not empty %}
+                                    <p class="mt-1 mb-0">
+                                        <i class="fas fa-info-circle"></i> {{ checkout.comment }}
+                                    </p>
+                                {% endif %}
                             </div>
 
                             {% if is_granted('return', checkout.bookCopy) %}
                                 <div class="buttons">
-                                    <a href="{{ path('return_copy', { uuid: checkout.bookCopy.uuid }) }}" class="btn btn-primary btn-sm">{{ 'actions.return'|trans }}</a>
+                                    <a href="{{ path('return', { copies: checkout.bookCopy.uuid }) }}" class="btn btn-primary btn-sm">{{ 'actions.return'|trans }}</a>
                                 </div>
                             {% endif %}
                         </div>
@@ -88,7 +94,7 @@
                                 <div class="flex-fill">
                                     <p class="mb-1">
                                         <a href="{{ path('book_copy', { uuid: checkout.bookCopy.uuid}) }}">{{ book.title }}</a>
-                                        <span class="badge text-bg-primary"><i class="fas fa-barcode"></i> {{ checkout.bookCopy.barcodeId }}</span>
+                                        <a class="badge text-bg-primary text-decoration-none" href="{{ path('book_copy', { uuid: checkout.bookCopy.uuid }) }}"><i class="fas fa-barcode"></i> {{ checkout.bookCopy.barcodeId }}</a>
                                         {% if book.subtitle is not empty %}
                                             <span class="text-muted d-block">{{ book.subtitle }}</span>
                                         {% endif %}
@@ -112,6 +118,12 @@
                                             {% endif %}
                                         {% endif %}
                                     </p>
+
+                                    {% if checkout.comment is not empty %}
+                                        <p class="mt-1 mb-0">
+                                            <i class="fas fa-info-circle"></i> {{ checkout.comment }}
+                                        </p>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endfor %}

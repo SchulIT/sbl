@@ -10,7 +10,7 @@
         <div class="align-self-start flex-fill">
             {{ book.title }}
 
-            <span class="badge text-bg-primary"><i class="fas fa-barcode"></i> {{ copy.barcodeId }}</span>
+            <a class="badge text-bg-primary text-decoration-none" href="{{ path('book_copy', { uuid: copy.uuid }) }}" target="_blank"><i class="fas fa-barcode"></i> {{ copy.barcodeId }}</a>
 
             {% if book.barcodeTitle is not empty %}
                 <span class="badge text-bg-secondary"><i class="fas fa-barcode"></i> {{ book.barcodeTitle }}</span>
@@ -35,6 +35,12 @@
                 <div class="alert alert-warning">
                     {{ 'return.errors.not_checked_out'|trans }}
                 </div>
+            {% endif %}
+
+            {% if copy.comment is not empty %}
+                <p>
+                    <i class="fas fa-info-circle"></i> {{ copy.comment }}
+                </p>
             {% endif %}
         </div>
     </div>

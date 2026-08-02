@@ -128,7 +128,7 @@ return:
     help: Diese Option gibt an, ob das Exemplar bzw. die Exemplare nach der Rückgabe noch ausleihbar sind.
   comment:
     label: Kommentar
-    help: Optional. Der Kommentar für das Exemplar bzw. die Exemplare gespeichert.
+    help: Optional. Der Kommentar für das Exemplar bzw. die Exemplare gespeichert. Hier kann bspw. festgehalten werden, warum das Exemplar nicht mehr ausleihbar ist (Beschädigung, nicht auffindbar, ...)
 
 books:
   label: Bücher
