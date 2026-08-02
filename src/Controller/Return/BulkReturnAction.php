@@ -4,7 +4,10 @@ namespace App\Controller\Return;
 
 use App\Checkout\BulkReturnRequest;
 use App\Checkout\CheckoutManager;
+use App\Entity\BookCopy;
 use App\Form\BulkReturnRequestType;
+use App\Http\HttpUtils;
+use App\Repository\BookCopyRepositoryInterface;
 use App\Security\Voter\CheckoutVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +17,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BulkReturnAction extends AbstractController {
 
-    public function __construct(private readonly CheckoutManager $checkoutManager) {
+    public function __construct(
+        private readonly CheckoutManager $checkoutManager,
+        private readonly HttpUtils $httpUtils,
+        private readonly BookCopyRepositoryInterface $bookCopyRepository
+    ) {
 
     }
 
@@ -27,6 +34,8 @@ class BulkReturnAction extends AbstractController {
         $this->denyAccessUnlessGranted(CheckoutVoter::RETURN);
 
         $return = new BulkReturnRequest();
+        $return->copies = $this->httpUtils->parseCharacterSeparatedRequestParamAsIntArray($request, 'copies');
+
         $form = $this->createForm(BulkReturnRequestType::class, $return);
         $form->handleRequest($request);
 

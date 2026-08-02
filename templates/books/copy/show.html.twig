@@ -72,7 +72,7 @@
 
                                     <div class="buttons">
                                         {% if is_granted('return', copy) %}
-                                            <a href="{{ path('return_copy', { uuid: checkout.bookCopy.uuid }) }}" class="btn btn-outline-primary btn-sm">
+                                            <a href="{{ path('return', { copies: checkout.bookCopy.id }) }}" class="btn btn-outline-primary btn-sm">
                                                 <i class="fa fa-reply"></i> {{ 'actions.return'|trans }}
                                             </a>
                                         {% endif %}
@@ -147,7 +147,7 @@
                     <div class="card">
                         <div class="list-group list-group-flush">
                             {% if canCheckout %}
-                            <a href="{{ path('checkout_copy', { uuid: copy.uuid}) }}" class="list-group-item list-group-item-action">
+                            <a href="{{ path('checkout', { copies: copy.id }) }}" class="list-group-item list-group-item-action">
                                 <i class="fas fa-shopping-cart"></i> {{ 'actions.checkout'|trans }}
                             </a>
                             {% endif %}
