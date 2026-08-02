@@ -168,6 +168,27 @@
             </div>
 
             <div class="col-md-3 sticky-sidebar">
+                {% set canEdit = is_granted('edit', book) %}
+                {% set canRemove = is_granted('remove', book) %}
+
+                {% if canEdit or canRemove %}
+                    <div class="card">
+                        <div class="list-group list-group-flush">
+                            {% if canEdit %}
+                                <a href="{{ path('edit_book', { uuid: book.uuid}) }}" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-edit"></i> {{ 'books.edit.label'|trans }}
+                                </a>
+                            {% endif %}
+
+                            {% if canRemove %}
+                                <a href="{{ path('remove_book', { uuid: book.uuid}) }}" class="list-group-item list-group-item-action list-group-item-danger">
+                                    <i class="fas fa-trash"></i> {{ 'books.remove.label'|trans }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{ book.title }}</h5>
