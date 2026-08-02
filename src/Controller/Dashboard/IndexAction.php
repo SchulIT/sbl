@@ -46,7 +46,8 @@ class IndexAction extends AbstractController {
             'borrowersCount' => $borrowersCount,
             'booksCount' => $booksCount,
             'copiesCount' => $copiesCount,
-            'currentCheckouts' => $currentCheckouts
+            'currentCheckouts' => $currentCheckouts,
+            'today' => $this->dateHelper->getToday()
         ]);
     }
 }
