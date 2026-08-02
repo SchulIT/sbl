@@ -138,7 +138,7 @@
                                     </td>
                                     <td class="align-middle">
                                         {% if checkout.bookCopy.book.coverFileName is not empty %}
-                                            <img src="{{ vich_uploader_asset(checkout.bookCopy.book, 'cover') }}" class="me-2 align-self-start cover cover-small">
+                                            <img src="{{ vich_uploader_asset(checkout.bookCopy.book, 'cover') }}" class="me-2 align-self-start cover cover-small" alt="">
                                         {% endif %}
 
                                         <a href="{{ path('show_book', { uuid: checkout.bookCopy.book.uuid}) }}">

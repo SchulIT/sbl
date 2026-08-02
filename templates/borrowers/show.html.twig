@@ -28,7 +28,7 @@
                         {% set book = checkout.bookCopy.book %}
                         <div class="list-group-item d-flex">
                             {% if book.hasCover %}
-                                <img src="{{ vich_uploader_asset(book, 'cover') }}" class="me-2 align-self-start cover">
+                                <img src="{{ vich_uploader_asset(book, 'cover') }}" class="me-2 align-self-start cover" alt="">
                             {% endif %}
 
                             <div class="flex-fill">
@@ -88,7 +88,7 @@
                             {% set book = checkout.bookCopy.book %}
                             <div class="list-group-item d-flex">
                                 {% if book.hasCover %}
-                                    <img src="{{ vich_uploader_asset(book, 'cover') }}" class="me-2 align-self-start cover">
+                                    <img src="{{ vich_uploader_asset(book, 'cover') }}" class="me-2 align-self-start cover" alt="">
                                 {% endif %}
 
                                 <div class="flex-fill">
