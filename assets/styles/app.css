@@ -3,3 +3,12 @@
         width: 140px;
     }
 }
+
+.cover {
+    max-width: 70px;
+    object-fit: contain;
+}
+
+.cover-small {
+    max-width: 50px !important;
+}

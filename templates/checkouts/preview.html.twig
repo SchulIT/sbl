@@ -3,7 +3,7 @@
     <div class="list-group-item d-flex">
         {% if book.coverFileName is not empty %}
             <div class="me-2">
-                <img src="{{ vich_uploader_asset(book, 'cover') }}" style="max-width: 50px">
+                <img src="{{ vich_uploader_asset(book, 'cover') }}" class="me-2 align-self-start cover">
             </div>
         {% endif %}
 

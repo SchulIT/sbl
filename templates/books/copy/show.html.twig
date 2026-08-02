@@ -113,8 +113,21 @@
                                         <p class="mb-1">
                                             <i class="fas fa-calendar-alt"></i> <i class="fas fa-arrow-right"></i> {{ checkout.start|format_datetime }}
                                         </p>
-                                        <p class="mb-0">
+                                        <p class="mb-1">
                                             <i class="fas fa-calendar-alt"></i> <i class="fas fa-arrow-left"></i> {{ checkout.end|format_datetime }}
+                                        </p>
+
+                                        <p class="mb-0">
+                                            {% if checkout.expectedReturnDate is not null %}
+                                                {% if checkout.isOverdue(checkout.end) %}
+                                                    <span class="text-danger">
+                                                    <i class="fas fa-calendar-alt"></i> {{ 'checkouts.expected_return_date'|trans}}: {{ checkout.expectedReturnDate|format_date }}
+                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                </span>
+                                                {% else %}
+                                                    <i class="fas fa-calendar-alt"></i> {{ 'checkouts.expected_return_date'|trans}}: {{ checkout.expectedReturnDate|format_date }}
+                                                {% endif %}
+                                            {% endif %}
                                         </p>
                                     </div>
                                 </div>
