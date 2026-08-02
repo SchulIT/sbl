@@ -5,6 +5,7 @@ namespace App\Menu;
 use App\Entity\User;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
+use SchulIT\CommonBundle\DarkMode\DarkModeManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -12,8 +13,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserMenuBuilder extends AbstractMenuBuilder {
 
     public function __construct(private readonly string $idpProfileUrl,
-                                FactoryInterface $factory, TokenStorageInterface $tokenStorage,
-                                AuthorizationCheckerInterface $authorizationChecker, TranslatorInterface $translator) {
+                                FactoryInterface $factory,
+                                TokenStorageInterface $tokenStorage,
+                                AuthorizationCheckerInterface $authorizationChecker,
+                                TranslatorInterface $translator,
+                                readonly DarkModeManagerInterface $darkModeManager,
+    ) {
         parent::__construct($factory, $tokenStorage, $authorizationChecker, $translator);
     }
 
@@ -42,6 +47,19 @@ class UserMenuBuilder extends AbstractMenuBuilder {
             ->setExtra('menu', 'user')
             ->setExtra('menu-container', '#submenu')
             ->setExtra('pull-right', true);
+
+        $label = 'dark_mode.enable';
+        $icon = 'fas fa-moon';
+
+        if($this->darkModeManager->isDarkModeEnabled()) {
+            $label = 'dark_mode.disable';
+            $icon = 'fas fa-sun';
+        }
+
+        $userMenu->addChild($label, [
+            'route' => 'toggle_darkmode'
+        ])
+            ->setExtra('icon', $icon);
 
         $userMenu->addChild('profile.label', [
             'uri' => $this->idpProfileUrl

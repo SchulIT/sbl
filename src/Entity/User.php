@@ -52,6 +52,12 @@ class User implements UserInterface {
     #[ORM\InverseJoinColumn(onDelete: 'CASCADE')]
     private Collection $associatedBorrowers;
 
+    /**
+     * @var string[]
+     */
+    #[ORM\Column(type: 'json')]
+    private array $data = [ ];
+
     public function __construct() {
         $this->uuid = Uuid::v4()->toString();
         $this->associatedBorrowers = new ArrayCollection();
@@ -130,6 +136,14 @@ class User implements UserInterface {
      */
     public function getAssociatedBorrowers(): Collection {
         return $this->associatedBorrowers;
+    }
+
+    public function getData(string $key, $default = null) {
+        return $this->data[$key] ?? $default;
+    }
+
+    public function setData(string $key, $data): void {
+        $this->data[$key] = $data;
     }
 
     public function __toString(): string {
