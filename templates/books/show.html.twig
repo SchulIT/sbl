@@ -69,9 +69,10 @@
                                 <colgroup>
                                     <col class="column-sm">
                                     <col class="column-sm">
-                                    <col>
-                                    <col>
                                     <col class="column-lg">
+                                    <col class="column-lg">
+                                    <col class="column-lg">
+                                    <col>
                                     <col class="column-140">
                                 </colgroup>
 
@@ -84,6 +85,7 @@
                                     <td>{{ 'label.created_at'|trans }}</td>
                                     <td>{{ 'label.label_printed_at'|trans }}</td>
                                     <td>{{ 'label.status'|trans }}</td>
+                                    <td>{{ 'label.comment'|trans }}</td>
                                     <td></td>
                                 </tr>
                                 </thead>
@@ -95,7 +97,7 @@
                                             <input type="checkbox" class="form-check-input" value="{{ copy.id }}" data-bulk-id="copy" data-select="single">
                                         </td>
                                         <td class="align-middle">
-                                            <a href="{{ path('book_copy', { uuid: copy.uuid }) }}" class="badge text-bg-primary">
+                                            <a href="{{ path('book_copy', { uuid: copy.uuid }) }}" class="badge text-bg-primary text-decoration-none">
                                                 <i class="fas fa-barcode"></i> {{ copy.barcodeId }}
                                             </a>
                                         </td>
@@ -120,6 +122,9 @@
                                                 <span class="badge text-bg-warning">{{ status|trans }}</span>
                                             {% endif %}
                                         </td>
+                                       <td class="align-middle">
+                                           <p>{{ copy.comment }}</p>
+                                       </td>
                                         <td class="align-middle">
                                             <a href="{{ path('book_copy', { uuid: copy.uuid}) }}" class="btn btn-outline-primary btn-sm" title="{{ 'books.copies.show.label'|trans }}">
                                                 <i class="fas fa-magnifying-glass"></i>
