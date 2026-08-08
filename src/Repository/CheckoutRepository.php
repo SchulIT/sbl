@@ -8,7 +8,7 @@ use App\Entity\Checkout;
 use DateTime;
 use Override;
 
-class CheckoutRepository extends AbstractRepository implements CheckoutRepositoryInterface {
+class CheckoutRepository extends AbstractTransactionalRepository implements CheckoutRepositoryInterface {
 
     public function persist(Checkout $checkout): void {
         $this->em->persist($checkout);
@@ -147,5 +147,16 @@ class CheckoutRepository extends AbstractRepository implements CheckoutRepositor
             $qb,
             $paginationQuery
         );
+    }
+
+    #[Override]
+    public function findAllByUuids(array $uuids): array {
+        return $this->em->createQueryBuilder()
+            ->select(['c'])
+            ->from(Checkout::class, 'c')
+            ->where('c.uuid IN (:uuids)')
+            ->setParameter('uuids', $uuids)
+            ->getQuery()
+            ->getResult();
     }
 }

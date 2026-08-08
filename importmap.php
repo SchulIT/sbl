@@ -28,6 +28,14 @@ return [
         'path' => './assets/js/autocomplete.js',
         'entrypoint' => true,
     ],
+    'bulk' => [
+        'path' => './assets/js/bulk.js',
+        'entrypoint' => true,
+    ],
+    'confirm' => [
+        'path' => './assets/js/confirm.js',
+        'entrypoint' => true,
+    ],
     'bootstrap' => [
         'version' => '5.3.8',
     ],

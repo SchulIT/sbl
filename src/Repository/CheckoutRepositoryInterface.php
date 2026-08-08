@@ -8,7 +8,7 @@ use App\Entity\Borrower;
 use App\Entity\Checkout;
 use DateTime;
 
-interface CheckoutRepositoryInterface {
+interface CheckoutRepositoryInterface extends TransactionalRepositoryInterface {
 
     /**
      * @param Borrower $borrower
@@ -33,6 +33,12 @@ interface CheckoutRepositoryInterface {
      * @return PaginatedResult<Checkout>
      */
     public function findPaginated(PaginationQuery $paginationQuery, Book|null $book = null, string|null $grade = null, bool $onlyActive = true, DateTime|null $todayForOverdue = null): PaginatedResult;
+
+    /**
+     * @param string[] $uuids
+     * @return Checkout[]
+     */
+    public function findAllByUuids(array $uuids): array;
 
     public function persist(Checkout $checkout): void;
 

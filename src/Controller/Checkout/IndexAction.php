@@ -2,6 +2,7 @@
 
 namespace App\Controller\Checkout;
 
+use App\Checkout\Bulk\BulkManager;
 use App\Entity\Book;
 use App\Repository\BookRepositoryInterface;
 use App\Repository\BorrowerRepositoryInterface;
@@ -21,6 +22,7 @@ class IndexAction extends AbstractController {
         private readonly BorrowerRepositoryInterface $borrowerRepository,
         private readonly BookRepositoryInterface $bookRepository,
         private readonly DateHelper $dateHelper,
+        private readonly BulkManager $bulkManager
     ) {
 
     }
@@ -58,6 +60,8 @@ class IndexAction extends AbstractController {
             'all' => $includePastCheckouts,
             'overdue' => $onlyShowOverdue,
             'today' => $this->dateHelper->getToday(),
+            'bulkActions' => $this->bulkManager->getActions(),
+            'bulkCsrfTokenId' => BulkAction::CSRF_TOKEN_ID
         ]);
     }
 }

@@ -9,6 +9,10 @@
     </ol>
 {% endblock %}
 
+{% block importmap %}
+    {{ importmap(['app', 'bulk', 'confirm']) }}
+{% endblock %}
+
 {% block content %}
     <div class="container-fluid px-0">
         <div class="row">
@@ -86,9 +90,42 @@
                             </div>
                         </div>
                     {% else %}
+                        <div class="card-header" data-role="bulk-actions">
+                            <form method="post"
+                                  action="{{ path('checkouts_bulk') }}"
+                                  class="row row-cols-lg-auto g-1 align-items-center"
+                                  data-confirm="true"
+                                  data-confirm-modal="#confirm-bulk"
+                            >
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token(bulkCsrfTokenId) }}">
+                                <input type="hidden" name="checkouts" value="" data-role="bulk-values">
+
+                                <div>
+                                    <span data-role="bulk-counter"></span>
+                                    {{ 'checkouts.bulk.selected'|trans }}
+                                </div>
+
+                                <div class="col">
+                                    <select name="action" class="form-select form-select-sm">
+                                        <option value="">{{ 'checkouts.bulk.actions.select'|trans }}</option>
+                                        {% for key, action in bulkActions %}
+                                            <option value="{{ key }}">{{ action|trans }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                                        <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
                         <div class="table-responsive">
                             <table class="table table-striped table-hover card-table">
                                 <colgroup>
+                                    <col class="column-sm">
                                     <col>
                                     <col>
                                     <col class="column-md">
@@ -100,6 +137,7 @@
 
                                 <thead>
                                 <tr>
+                                    <th><input type="checkbox" class="form-check-input" data-role="bulk-all"></th>
                                     <th>
                                         {{ 'label.lastname'|trans }}, {{ 'label.firstname'|trans }}
                                     </th>
@@ -127,6 +165,9 @@
                                 <tbody>
                                 {% for checkout in checkouts %}
                                 <tr>
+                                    <td class="align-middle">
+                                        <input type="checkbox" class="form-check-input" value="{{ checkout.uuid }}" data-role="bulk-item">
+                                    </td>
                                     <td class="align-middle">
                                         <a href="{{ path('show_borrower', { uuid: checkout.borrower.uuid}) }}">
                                             {{ checkout.borrower.lastname }}, {{ checkout.borrower.firstname }}
@@ -207,6 +248,28 @@
                 </div>
 
 
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+
+    <div class="modal" id="confirm-bulk" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'checkouts.bulk.confirm.header'|trans }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>{{ 'checkouts.bulk.confirm.message'|trans }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'actions.cancel'|trans }}</button>
+                    <button type="button" class="btn btn-primary" data-confirm-button>{{ 'actions.confirm'|trans }}</button>
+                </div>
             </div>
         </div>
     </div>

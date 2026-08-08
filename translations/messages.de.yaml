@@ -96,6 +96,19 @@ checkouts:
 
   expected_return_date: Erwartete Rückgabe
 
+  bulk:
+    counter:
+    selected: ausgewählt
+    success: '%count% Ausleihen erfolgreich aktualisiert'
+    actions:
+      select: Aktion auswählen
+      remove: Ausleihen löschen
+      return: Ausleihen beenden
+
+    confirm:
+      header: Aktion bestätigen
+      message: Soll die Aktion wirklich durchgeführt werden?
+
   past:
     label: Abgeschlossene Ausleihen
     empty: Es gibt noch keine abgeschlossenen Ausleihen.
