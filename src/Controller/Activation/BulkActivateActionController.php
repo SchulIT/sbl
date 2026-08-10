@@ -5,6 +5,7 @@ namespace App\Controller\Activation;
 use App\Activation\Activator;
 use App\Activation\BulkActivationRequest;
 use App\Activation\BulkActivationRequestType;
+use App\Http\HttpUtils;
 use App\Security\Voter\BookCopyVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,7 +17,8 @@ class BulkActivateActionController extends AbstractController {
 
     public function __construct(
         private readonly Activator $activator,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
+        private readonly HttpUtils $httpUtils,
     ) {
 
     }
@@ -26,6 +28,7 @@ class BulkActivateActionController extends AbstractController {
         $this->denyAccessUnlessGranted(BookCopyVoter::ACTIVATE);
 
         $activationRequest = new BulkActivationRequest();
+        $activationRequest->copies = $this->httpUtils->parseCharacterSeparatedRequestParamAsIntArray($request, 'copies');
         $form = $this->createForm(BulkActivationRequestType::class, $activationRequest);
         $form->handleRequest($request);
 
