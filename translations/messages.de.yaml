@@ -323,6 +323,7 @@ labels:
 
 return_date:
   label: Rückgabedatum
+  help: In dieser Maske kann das erwartete Rückgabedatum für bereits ausgeliehene Bücher gesetzt werden.
 
   book: Buch
   grades:
