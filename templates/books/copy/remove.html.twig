@@ -8,7 +8,7 @@
         <li class="breadcrumb-item"><a href="{{ path('books') }}">{{ 'books.label'|trans }}</a></li>
         <li class="breadcrumb-item"><a href="{{ path('show_book', { uuid: book.uuid}) }}">{{ book.title }}</a></li>
         <li class="breadcrumb-item"><span class="badge text-bg-primary">{{ copy.barcodeId }}</span></li>
-        <li class="breadcrumb-item">{{ block('title') }}</li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
     </ol>
 {% endblock %}
 

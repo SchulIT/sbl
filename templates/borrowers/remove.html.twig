@@ -7,7 +7,7 @@
         <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
         <li class="breadcrumb-item"><a href="{{ path('borrowers') }}">{{ 'books.label'|trans }}</a></li>
         <li class="breadcrumb-item"><a href="{{ path('show_borrower', { uuid: borrower.uuid}) }}">{{ borrower.lastname }}, {{ borrower.firstname }}</a></li>
-        <li class="breadcrumb-item">{{ block('title') }}</li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
     </ol>
 {% endblock %}
 
