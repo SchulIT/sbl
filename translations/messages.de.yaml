@@ -44,6 +44,7 @@ actions:
   back: Zurück
   details: Details
   download: Herunterladen
+  activate: Aktivieren
 
 borrowers:
   label: Entleiher
@@ -158,6 +159,10 @@ books:
     empty: Aktuell sind keine Exemplare im System hinterlegt.
     only_not_printed: Nur Exemplare ohne gedrucktes Etikett anzeigen
     cannot_checkout: Exemplar nicht ausleihbar
+    activated: aktiviert
+    not_activated:
+      label: nicht aktiviert
+      help: Das Exemplar wird bei der ersten Ausleihe automatisch aktiviert. Alternativ kann es über den Menüpunkt händisch aktiviert werden.
     limit: '%count% Exemplare anzeigen'
     count: '%count% Exemplare'
     add:
@@ -332,5 +337,9 @@ return_date:
 
   success: 'Bei %count% Bücherausgaben wurde das Rückgabedatum auf %date% gesetzt'
 
+activation:
+  label: Aktivierung
+  help: Hier können Bücher aktiviert werden. Die Aktivierung dient dazu, dass angelegte Exemplare auch tatsächlich beklebt wurden und somit im System entsprechend gezählt werden. Das ermöglicht es, Etiketten auf Vorrat zu drucken. Exemplare werden bei der erstmaligen Ausliehe automatisch aktiviert.
+  success: '%count% Bücher wurden erfolgreich aktiviert'
 
 not_available: N/A

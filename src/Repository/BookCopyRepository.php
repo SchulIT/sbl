@@ -76,6 +76,26 @@ class BookCopyRepository extends AbstractTransactionalRepository implements Book
             ->getSingleScalarResult();
     }
 
+    public function countActivatedByBook(Book $book): int {
+        return $this->em->createQueryBuilder()
+            ->select('COUNT(b)')
+            ->from(BookCopy::class, 'b')
+            ->where('b.book = :book')
+            ->andWhere('b.isActivated = true')
+            ->setParameter('book', $book)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function countActivated(): int {
+        return $this->em->createQueryBuilder()
+            ->select('COUNT(1)')
+            ->from(BookCopy::class, 'c')
+            ->where('c.isActivated = true')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function countAll(): int {
         return $this->em->createQueryBuilder()
             ->select('COUNT(1)')

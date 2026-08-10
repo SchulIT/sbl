@@ -43,6 +43,10 @@ readonly class Builder {
                 'route' => 'return_date'
             ])
                 ->setExtra('icon', 'fa fa-calendar');
+            $menu->addChild('activation.label', [
+                'route' => 'bulk_activate'
+            ])
+                ->setExtra('icon', 'fa fa-check');
         }
 
         if($this->authorizationChecker->isGranted(CheckoutVoter::SHOW_ANY)) {

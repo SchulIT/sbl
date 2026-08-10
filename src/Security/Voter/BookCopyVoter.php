@@ -17,12 +17,15 @@ class BookCopyVoter extends Voter {
     public const string CHECKOUT = 'checkout';
     public const string RETURN = 'return';
 
+    public const string ACTIVATE = 'activate-book-copy';
+
     public function __construct(private readonly AccessDecisionManagerInterface $accessDecisionManager, private readonly CheckoutManager $checkoutManager) {
 
     }
 
     protected function supports(string $attribute, mixed $subject): bool {
         return $attribute === self::ADD
+            || $attribute === self::ACTIVATE
             || ($subject instanceof BookCopy && in_array($attribute, [self::EDIT, self::REMOVE, self::CHECKOUT, self::RETURN]));
     }
 
@@ -42,12 +45,19 @@ class BookCopyVoter extends Voter {
 
             case self::RETURN:
                 return $this->canReturn($token, $subject);
+
+            case self::ACTIVATE:
+                return $this->canActivate($token);
         }
 
         throw new LogicException('This code should not be reached!');
     }
 
     private function canAdd(TokenInterface $token): bool {
+        return $this->accessDecisionManager->decide($token, ['ROLE_BOOKS_ADMIN']);
+    }
+
+    private function canActivate(TokenInterface $token): bool {
         return $this->accessDecisionManager->decide($token, ['ROLE_BOOKS_ADMIN']);
     }
 

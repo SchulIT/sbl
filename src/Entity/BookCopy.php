@@ -24,6 +24,9 @@ class BookCopy {
     private Book $book;
 
     #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $isActivated = false;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $canCheckout = true;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -59,6 +62,15 @@ class BookCopy {
 
     public function setBook(Book $book): BookCopy {
         $this->book = $book;
+        return $this;
+    }
+
+    public function isActivated(): bool {
+        return $this->isActivated;
+    }
+
+    public function setIsActivated(bool $isActivated): BookCopy {
+        $this->isActivated = $isActivated;
         return $this;
     }
 

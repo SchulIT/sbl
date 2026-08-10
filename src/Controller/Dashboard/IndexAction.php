@@ -31,7 +31,7 @@ class IndexAction extends AbstractController {
         $overdueCheckouts = $this->checkoutRepository->countOverdue($this->dateHelper->getToday());
         $borrowersCount = $this->borrowerRepository->countAll();
         $booksCount = $this->bookRepository->countAll();
-        $copiesCount = $this->bookCopyRepository->countAll();
+        $copiesCount = $this->bookCopyRepository->countActivated();
 
         $currentCheckouts = [ ];
 

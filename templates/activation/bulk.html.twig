@@ -1,0 +1,73 @@
+{% extends "main.html.twig" %}
+
+{% block title %}{{ 'activation.label'|trans }}{% endblock %}
+
+{% block breadcrumb %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('dashboard') }}">{{ 'dashboard.label'|trans }}</a></li>
+        <li class="breadcrumb-item active">{{ block('title') }}</li>
+    </ol>
+{% endblock %}
+
+{% block importmap %}
+    {{ importmap(['app', 'checkout']) }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+
+    <div class="card">
+        <div class="card-header">{{ 'label.general'|trans }}</div>
+        <div class="card-body">
+            <div class="bs-callout bs-callout-info">
+                <h5>{{ 'info.label'|trans }}</h5>
+                <p>{{ 'activation.help'|trans }}</p>
+            </div>
+
+            {{ form_widget(form) }}
+
+            <div class="bs-callout bs-callout-info d-none" id="counter">
+                <template>{{ 'checkout.bulk.num_copies'|trans }}</template>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" data-container="checkout">
+        <div class="card-header">{{ 'checkout.preview.label'|trans }}</div>
+        <div class="list-group list-group-flush" id="checkout_preview" data-select="#bulk_activation_request_copies" data-url="{{ path('xhr_activation') }}" data-maximum="{{ maximumNumberOfCopies }}"></div>
+    </div>
+
+    <div class="buttons">
+        <button type="submit" class="btn btn-sm btn-primary">
+            <i class="fas fa-check"></i> {{ 'actions.activate'|trans }}
+        </button>
+
+        <a href="javascript: history.back()" class="btn btn-sm btn-secondary">
+            {{ 'actions.cancel'|trans }}
+        </a>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+<div class="modal" tabindex="-1" id="modalError">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ 'checkout.bulk.too_many_copies.header'|trans }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ 'checkout.bulk.too_many_copies.content'|trans({'%count%': maximumNumberOfCopies}) }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ 'actions.confirm'|trans }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

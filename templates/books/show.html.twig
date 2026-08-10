@@ -112,14 +112,18 @@
                                             {% endif %}
                                         </td>
                                         <td class="align-middle">
-                                            {% set status = manager.status(copy) %}
+                                            {% if copy.activated %}
+                                                {% set status = manager.status(copy) %}
 
-                                            {% if status.value == 'available' %}
-                                                <span class="badge text-bg-success">{{ status|trans }}</span>
-                                            {% elseif status.value == 'not_available' %}
-                                                <span class="badge text-bg-danger">{{ status|trans }}</span>
+                                                {% if status.value == 'available' %}
+                                                    <span class="badge text-bg-success">{{ status|trans }}</span>
+                                                {% elseif status.value == 'not_available' %}
+                                                    <span class="badge text-bg-danger">{{ status|trans }}</span>
+                                                {% else %}
+                                                    <span class="badge text-bg-warning">{{ status|trans }}</span>
+                                                {% endif %}
                                             {% else %}
-                                                <span class="badge text-bg-warning">{{ status|trans }}</span>
+                                                <span class="badge text-bg-secondary" title="{{ 'books.copies.not_activated.help'|trans }}">{{ 'books.copies.not_activated.label'|trans }}</span>
                                             {% endif %}
                                         </td>
                                        <td class="align-middle">

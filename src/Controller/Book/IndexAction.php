@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class IndexAction extends AbstractController {
     public function __construct(private readonly BookRepositoryInterface $repository,
+                                private readonly BookCopyRepositoryInterface $bookCopyRepository,
                                 private readonly AvailabilityReportGenerator $availabilityReportHelper) {
 
     }
@@ -35,15 +36,18 @@ class IndexAction extends AbstractController {
         }
 
         $reports = [ ];
+        $activatedCounts = [ ];
 
         foreach($books as $book) {
             $reports[$book->getId()] = $this->availabilityReportHelper->generateReportForBook($book);
+            $activatedCounts[$book->getId()] = $this->bookCopyRepository->countActivatedByBook($book);
         }
 
         return $this->render('books/index.html.twig', [
             'books' => $books,
             'query' => $searchQuery,
-            'reports' => $reports
+            'reports' => $reports,
+            'activatedCounts' => $activatedCounts,
         ]);
     }
 }

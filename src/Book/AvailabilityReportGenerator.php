@@ -5,6 +5,7 @@ namespace App\Book;
 use App\Checkout\CheckoutManager;
 use App\Checkout\CheckoutStatus;
 use App\Entity\Book;
+use App\Entity\BookCopy;
 use DateTime;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Contracts\Cache\CacheInterface;
@@ -43,7 +44,12 @@ class AvailabilityReportGenerator {
             $checkedOut = 0;
             $availableAndNotCheckedOut = 0;
 
+            /** @var BookCopy $copy */
             foreach($book->getCopies() as $copy) {
+                if(!$copy->isActivated()) {
+                    continue;
+                }
+
                 $status = $this->checkoutManager->getStatus($copy);
 
                 switch($status) {

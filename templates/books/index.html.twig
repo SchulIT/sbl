@@ -76,6 +76,7 @@
                             <col class="column-sm">
                             <col class="column-sm">
                             <col class="column-sm">
+                            <col class="column-sm">
                             <col class="column-140">
                         </colgroup>
 
@@ -85,6 +86,7 @@
                             <td>{{ 'label.title'|trans }}</td>
                             <td>{{ 'label.publisher'|trans }}</td>
                             <td>{{ 'books.copies.label'|trans }}</td>
+                            <td>{{ 'books.copies.activated'|trans }}</td>
                             <td>{{ 'checkout_status.available'|trans({}, 'enums') }}</td>
                             <td>{{ 'checkout_status.checked_out'|trans({}, 'enums') }}</td>
                             <td>{{ 'checkout_status.not_available'|trans({}, 'enums') }}</td>
@@ -122,6 +124,9 @@
                                 </td>
                                 <td class="align-middle">
                                     {{ book.copies.count }}
+                                </td>
+                                <td class="align-middle">
+                                    {{ activatedCounts[book.id] }}
                                 </td>
                                 <td class="align-middle">
                                     {{ reports[book.id].availableAndNotCheckedOut }}

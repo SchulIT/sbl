@@ -42,6 +42,11 @@ readonly class CheckoutManager {
 
         $this->return($copy);
 
+        if($copy->isActivated() !== true) {
+            $copy->setIsActivated(true);
+            $this->bookCopyRepository->persist($copy);
+        }
+
         $newCheckout = (new Checkout())
             ->setBookCopy($copy)
             ->setBorrower($borrower)
