@@ -49,6 +49,13 @@
                                     <i class="fas fa-barcode"></i> {{ 'labels.download.label'|trans }}
                                 </button>
 
+                                <button type="button" class="btn btn-outline-primary btn-sm"
+                                        data-bulk-id="copy"
+                                        data-url="{{ path('bulk_activate') }}"
+                                        data-param-name="copies">
+                                    <i class="fas fa-check"></i> {{ 'activation.label'|trans }}
+                                </button>
+
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-create-copies">
                                     <i class="fas fa-plus"></i> {{ 'books.copies.add.label'|trans }}
                                 </button>
