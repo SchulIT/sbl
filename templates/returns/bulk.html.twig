@@ -20,17 +20,13 @@
         <div class="card-header">{{ 'label.general'|trans }}</div>
         <div class="card-body">
             {{ form_widget(form) }}
-
-            <div class="bs-callout bs-callout-info d-none" id="counter">
-                <template>{{ 'checkout.bulk.num_copies'|trans }}</template>
-                <p></p>
-            </div>
         </div>
     </div>
 
-    <div class="card" data-container="checkout">
-        <div class="card-header">{{ 'checkout.preview.label'|trans }}</div>
-        <div class="list-group list-group-flush" id="checkout_preview" data-select="#bulk_return_request_copies" data-url="{{ path('xhr_return') }}" data-maximum="{{ maximumNumberOfCopies }}"></div>
+    <div id="preview"
+         data-select="#bulk_return_request_copies"
+         data-url="{{ path('xhr_return') }}"
+         data-maximum="{{ maximumNumberOfCopies }}">
     </div>
 
     <div class="buttons">
