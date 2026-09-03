@@ -16,31 +16,12 @@ async function updatePreview($select, $preview, url, $modal, maximumNumberOfCopi
     }
 }
 
-function updateCounter($select, $counter) {
-    let copies = getCopies($select);
-
-    let $template = $counter.querySelector('template');
-    let templateText = $template.innerHTML;
-
-    let text = templateText.replace('%count%', copies.length);
-    let $p = $counter.querySelector('p');
-
-    $p.innerHTML = text;
-
-    if(copies.length > 0) {
-        $counter.classList.remove('d-none');
-    } else {
-        $counter.classList.add('d-none');
-    }
-}
-
 function getCopies($select) {
-    console.log($select);
     return $select.value.split(',');
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    let $preview = document.getElementById('checkout_preview');
+    let $preview = document.getElementById('preview');
     let $select = document.querySelector($preview.getAttribute('data-select'));
 
     new TomSelect($select, {
@@ -52,7 +33,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let maximumNumberOfCopies = parseInt($preview.getAttribute('data-maximum'));
 
     $select.addEventListener('change', async () => {
-        updateCounter($select, document.getElementById('counter'));
         await updatePreview($select, $preview, url, $modal, maximumNumberOfCopies);
     });
 

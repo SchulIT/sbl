@@ -1,49 +1,100 @@
-{% for copy in copies %}
+{% macro bookCopy(copy) %}
     {% set book = copy.book %}
-    <div class="list-group-item d-flex">
-        {% if book.coverFileName is not empty %}
-            <div class="me-2">
-                <img src="{{ vich_uploader_asset(book, 'cover') }}" class="me-2 align-self-start cover" alt="">
-            </div>
+
+    {% if book.coverFileName is not empty %}
+        <img src="{{ vich_uploader_asset(book, 'cover') }}" class="mb-1 cover d-block w-100" alt="">
+    {% endif %}
+
+    <div>{{ book.title }}</div>
+
+    <a class="badge text-bg-primary text-decoration-none" href="{{ path('book_copy', { uuid: copy.uuid }) }}" target="_blank"><i class="fas fa-barcode"></i> {{ copy.barcodeId }}</a>
+
+    {% if book.barcodeTitle is not empty %}
+        <span class="badge text-bg-secondary text-wrap"><i class="fas fa-barcode"></i> {{ book.barcodeTitle }}</span>
+    {% endif %}
+{% endmacro %}
+
+{% macro bookComment(copy) %}
+    {% if copy.comment is not empty %}
+        <p>
+            <i class="fas fa-info-circle"></i> {{ copy.comment }}
+        </p>
+    {% endif %}
+{% endmacro %}
+
+{% set copiesNotToCheckout = [ ] %}
+{% set copiesWithActiveCheckout = [ ] %}
+{% set copiesToCheckout = [ ] %}
+
+{% for copy in copies %}
+    {% if manager.checkedOut(copy) %}
+        {% set lastCheckout = copy.checkouts.first %}
+        {% if lastCheckout is not empty and lastCheckout.borrower is not null and lastCheckout.end is null %}
+            {% set copiesWithActiveCheckout = copiesWithActiveCheckout|merge([ copy ]) %}
+        {% endif %}
+    {% elseif not copy.canCheckout %}
+        {% set copiesNotToCheckout = copiesNotToCheckout|merge([ copy ]) %}
+    {% else %}
+        {% set copiesToCheckout = copiesToCheckout|merge([ copy ]) %}
+    {% endif %}
+{% endfor %}
+
+<div class="card">
+    <div class="card-header">
+        {{ 'checkout.preview.label'|trans }}
+
+        <span class="badge rounded-pill text-bg-primary">
+            <i class="fa-solid fa-book"></i> {{ copies|length }}
+        </span>
+
+        {% if copiesToCheckout|length > 0 %}
+        <span class="badge rounded-pill text-bg-success">
+            <i class="fas fa-check"></i> {{ copiesToCheckout|length }}
+        </span>
         {% endif %}
 
-        <div class="align-self-start flex-fill">
-            {{ book.title }}
+        {% if copiesWithActiveCheckout|length > 0 %}
+            <span class="badge rounded-pill text-bg-warning">
+                <i class="fas fa-exclamation-triangle"></i> {{ copiesWithActiveCheckout|length }}
+            </span>
+        {% endif %}
 
-            <a class="badge text-bg-primary text-decoration-none" href="{{ path('book_copy', { uuid: copy.uuid }) }}" target="_blank"><i class="fas fa-barcode"></i> {{ copy.barcodeId }}</a>
-
-            {% if book.barcodeTitle is not empty %}
-                <span class="badge text-bg-secondary"><i class="fas fa-barcode"></i> {{ book.barcodeTitle }}</span>
-            {% endif %}
-
-            {% if book.subtitle is not empty %}
-                <span class="text-muted d-block">{{ book.subtitle }}</span>
-            {% endif %}
-
-            {% if manager.checkedOut(copy) %}
-                {% set lastCheckout = copy.checkouts.first %}
-                {% if lastCheckout is not empty and lastCheckout.borrower is not null and lastCheckout.end is null %}
-                    <div class="alert alert-danger">
-                        {{ 'checkout.errors.checked_out'|trans({'%lastname%': lastCheckout.borrower.lastname, '%firstname%': lastCheckout.borrower.firstname }) }}
-                    </div>
-                {% endif %}
-            {% elseif not copy.canCheckout %}
-                <div class="alert alert-danger">
-                    {{ 'checkout.errors.cannot_checkout'|trans }}
-                </div>
-            {% else %}
-                <div class="alert alert-success">
-                    {{ 'checkout.ok'|trans }}
-                </div>
-            {% endif %}
-
-            {% if copy.comment is not empty %}
-                <p>
-                    <i class="fas fa-info-circle"></i> {{ copy.comment }}
-                </p>
-            {% endif %}
-        </div>
-
-
+        {% if copiesNotToCheckout|length > 0 %}
+            <span class="badge rounded-pill text-bg-danger">
+                <i class="fas fa-times"></i> {{ copiesNotToCheckout|length }}
+            </span>
+        {% endif %}
     </div>
-{% endfor %}
+    <div class="card-body">
+        <div class="d-flex flex-wrap align-items-stretch">
+            {% for copy in copiesToCheckout %}
+                <div class="copy mb-2 me-2 alert alert-success">
+                    {{ _self.bookCopy(copy) }}
+                    {{ _self.bookComment(copy) }}
+                </div>
+            {% endfor %}
+
+            {% for copy in copiesWithActiveCheckout %}
+                <div class="copy large mb-2 me-2 alert alert-warning">
+                    {{ _self.bookCopy(copy) }}
+
+                    {% set lastCheckout = copy.checkouts.first %}
+                    {% if lastCheckout is not empty and lastCheckout.borrower is not null and lastCheckout.end is null %}
+                        <p>{{ 'checkout.errors.checked_out'|trans({'%lastname%': lastCheckout.borrower.lastname, '%firstname%': lastCheckout.borrower.firstname }) }}</p>
+                    {% endif %}
+
+                    {{ _self.bookComment(copy) }}
+                </div>
+            {% endfor %}
+
+            {% for copy in copiesNotToCheckout %}
+                <div class="copy mb-2 me-2 alert alert-danger">
+                    {{ _self.bookCopy(copy) }}
+                    <p>{{ 'checkout.errors.cannot_checkout'|trans }}</p>
+
+                    {{ _self.bookComment(copy) }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
