@@ -21,7 +21,7 @@ class BulkCheckoutRequestType extends AbstractType {
                 'attr' => [
                     'data-select' => 'tom-select'
                 ],
-                'choice_label' => fn(Borrower $borrower) => sprintf('[%d] %s, %s', $borrower->getBarcodeId(), $borrower->getLastname(), $borrower->getFirstname())
+                'choice_label' => fn(Borrower $borrower) => sprintf('%s %s, %s', $borrower->getBarcodeId(), $borrower->getLastname(), $borrower->getFirstname())
             ])
             ->add('copies', BarcodeChoiceList::class, [
                 'label' => 'label.copies',
